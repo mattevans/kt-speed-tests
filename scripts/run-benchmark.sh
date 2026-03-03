@@ -50,24 +50,36 @@ DURATION_S=$(echo "scale=2; ${DURATION_NS} / 1000000000" | bc)
 IMAGES_AFTER=$(docker images --format '{{.Repository}}:{{.Tag}}' | sort)
 
 # Determine which images were pulled during this run.
-IMAGES_PULLED=$(comm -13 <(echo "${IMAGES_BEFORE}") <(echo "${IMAGES_AFTER}"))
-NUM_IMAGES_PULLED=$(echo "${IMAGES_PULLED}" | grep -c . || echo 0)
+IMAGES_PULLED=$(comm -13 <(echo "${IMAGES_BEFORE}") <(echo "${IMAGES_AFTER}") | grep -v '^$' || true)
+if [ -z "${IMAGES_PULLED}" ]; then
+  NUM_IMAGES_PULLED=0
+  IMAGES_PULLED_JSON="[]"
+else
+  NUM_IMAGES_PULLED=$(echo "${IMAGES_PULLED}" | wc -l | tr -d ' ')
+  IMAGES_PULLED_JSON=$(echo "${IMAGES_PULLED}" | jq -R '[.,inputs] | map(select(length > 0))')
+fi
 
 # Count services in enclave.
-NUM_SERVICES=$(kurtosis enclave inspect "${ENCLAVE_NAME}" 2>/dev/null | grep -c "RUNNING\|STOPPED" || echo "unknown")
+NUM_SERVICES=$(kurtosis enclave inspect "${ENCLAVE_NAME}" 2>/dev/null | grep -cE "RUNNING|STOPPED" || echo "0")
 
-# Write result JSON.
-cat > "${RESULTS_DIR}/${RUN_LABEL}.json" <<EOF
-{
-  "label": "${RUN_LABEL}",
-  "config": "${CONFIG_FILE}",
-  "image_download_mode": "${IMAGE_DOWNLOAD}",
-  "duration_seconds": ${DURATION_S},
-  "num_images_pulled": ${NUM_IMAGES_PULLED},
-  "num_services": "${NUM_SERVICES}",
-  "images_pulled": $(echo "${IMAGES_PULLED}" | jq -R -s 'split("\n") | map(select(length > 0))')
-}
-EOF
+# Write result JSON via jq to guarantee valid output.
+jq -n \
+  --arg label "${RUN_LABEL}" \
+  --arg config "${CONFIG_FILE}" \
+  --arg mode "${IMAGE_DOWNLOAD}" \
+  --argjson duration "${DURATION_S}" \
+  --argjson images_pulled_count "${NUM_IMAGES_PULLED}" \
+  --arg services "${NUM_SERVICES}" \
+  --argjson images_pulled "${IMAGES_PULLED_JSON}" \
+  '{
+    label: $label,
+    config: $config,
+    image_download_mode: $mode,
+    duration_seconds: $duration,
+    num_images_pulled: $images_pulled_count,
+    num_services: $services,
+    images_pulled: $images_pulled
+  }' > "${RESULTS_DIR}/${RUN_LABEL}.json"
 
 echo ""
 echo "--- Result: ${RUN_LABEL} ---"

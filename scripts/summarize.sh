@@ -22,12 +22,12 @@ echo "|-----|--------|------------|--------------|---------------|----------|" >
 
 for result_file in "${RESULTS_DIR}"/*.json; do
   [ -f "${result_file}" ] || continue
-  LABEL=$(jq -r '.label' "${result_file}")
-  CONFIG=$(jq -r '.config' "${result_file}" | xargs basename)
-  MODE=$(jq -r '.image_download_mode' "${result_file}")
-  DURATION=$(jq -r '.duration_seconds' "${result_file}")
-  IMAGES=$(jq -r '.num_images_pulled' "${result_file}")
-  SERVICES=$(jq -r '.num_services' "${result_file}")
+  LABEL=$(jq -r '.label // "unknown"' "${result_file}")
+  CONFIG=$(jq -r '.config // "unknown"' "${result_file}" | xargs -I{} basename {})
+  MODE=$(jq -r '.image_download_mode // "unknown"' "${result_file}")
+  DURATION=$(jq -r '.duration_seconds // 0' "${result_file}")
+  IMAGES=$(jq -r '.num_images_pulled // 0' "${result_file}")
+  SERVICES=$(jq -r '.num_services // "0"' "${result_file}")
   echo "| ${LABEL} | ${CONFIG} | ${MODE} | ${DURATION} | ${IMAGES} | ${SERVICES} |" >> "${SUMMARY_FILE}"
 done
 
@@ -54,12 +54,19 @@ done
 # Add images pulled detail for cold runs.
 echo "## Images Pulled (Cold Runs)" >> "${SUMMARY_FILE}"
 echo "" >> "${SUMMARY_FILE}"
-for result_file in "${RESULTS_DIR}"/*-cold.json; do
-  [ -f "${result_file}" ] || continue
-  LABEL=$(jq -r '.label' "${result_file}")
+shopt -s nullglob
+COLD_FILES=("${RESULTS_DIR}"/*-cold.json)
+shopt -u nullglob
+for result_file in "${COLD_FILES[@]}"; do
+  LABEL=$(jq -r '.label // "unknown"' "${result_file}")
+  PULLED=$(jq -r '.images_pulled[]? // empty' "${result_file}" 2>/dev/null || true)
   echo "### ${LABEL}" >> "${SUMMARY_FILE}"
   echo '```' >> "${SUMMARY_FILE}"
-  jq -r '.images_pulled[]' "${result_file}" >> "${SUMMARY_FILE}"
+  if [ -n "${PULLED}" ]; then
+    echo "${PULLED}" >> "${SUMMARY_FILE}"
+  else
+    echo "(none)" >> "${SUMMARY_FILE}"
+  fi
   echo '```' >> "${SUMMARY_FILE}"
   echo "" >> "${SUMMARY_FILE}"
 done
