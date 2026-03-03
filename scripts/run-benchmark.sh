@@ -28,8 +28,8 @@ echo "========================================"
 # Clean up any previous enclave with same name.
 kurtosis enclave rm "${ENCLAVE_NAME}" -f 2>/dev/null || true
 
-# Record docker image state before run.
-IMAGES_BEFORE=$(docker images --format '{{.Repository}}:{{.Tag}}' | sort)
+# Snapshot docker image IDs (not tags — IDs are unique per digest).
+IMAGE_IDS_BEFORE=$(docker images --format '{{.ID}}' | sort -u)
 
 # Time the full kurtosis run.
 START_TS=$(date +%s%N)
@@ -46,18 +46,20 @@ END_TS=$(date +%s%N)
 DURATION_NS=$((END_TS - START_TS))
 DURATION_S=$(echo "scale=2; ${DURATION_NS} / 1000000000" | bc)
 
-# Record docker image state after run.
-IMAGES_AFTER=$(docker images --format '{{.Repository}}:{{.Tag}}' | sort)
+# Snapshot docker image IDs after.
+IMAGE_IDS_AFTER=$(docker images --format '{{.ID}}' | sort -u)
 
-# Determine which images were pulled during this run.
-IMAGES_PULLED=$(comm -13 <(echo "${IMAGES_BEFORE}") <(echo "${IMAGES_AFTER}") | grep -v '^$' || true)
-if [ -z "${IMAGES_PULLED}" ]; then
-  NUM_IMAGES_PULLED=0
-  IMAGES_PULLED_JSON="[]"
+# Count genuinely new image IDs (layers actually downloaded).
+NEW_IDS=$(comm -13 <(echo "${IMAGE_IDS_BEFORE}") <(echo "${IMAGE_IDS_AFTER}") | grep -v '^$' || true)
+if [ -z "${NEW_IDS}" ]; then
+  NUM_NEW_IMAGES=0
 else
-  NUM_IMAGES_PULLED=$(echo "${IMAGES_PULLED}" | wc -l | tr -d ' ')
-  IMAGES_PULLED_JSON=$(echo "${IMAGES_PULLED}" | jq -R '[.,inputs] | map(select(length > 0))')
+  NUM_NEW_IMAGES=$(echo "${NEW_IDS}" | wc -l | tr -d ' ')
 fi
+
+# List all images present now (for reference in cold runs).
+ALL_IMAGES=$(docker images --format '{{.Repository}}:{{.Tag}}' | grep -v '<none>' | sort -u)
+ALL_IMAGES_JSON=$(echo "${ALL_IMAGES}" | jq -R '[.,inputs] | map(select(length > 0))' 2>/dev/null || echo '[]')
 
 # Count services in enclave.
 NUM_SERVICES=$(kurtosis enclave inspect "${ENCLAVE_NAME}" 2>/dev/null | grep -cE "RUNNING|STOPPED" || echo "0")
@@ -68,24 +70,24 @@ jq -n \
   --arg config "${CONFIG_FILE}" \
   --arg mode "${IMAGE_DOWNLOAD}" \
   --argjson duration "${DURATION_S}" \
-  --argjson images_pulled_count "${NUM_IMAGES_PULLED}" \
+  --argjson new_images "${NUM_NEW_IMAGES}" \
   --arg services "${NUM_SERVICES}" \
-  --argjson images_pulled "${IMAGES_PULLED_JSON}" \
+  --argjson all_images "${ALL_IMAGES_JSON}" \
   '{
     label: $label,
     config: $config,
     image_download_mode: $mode,
     duration_seconds: $duration,
-    num_images_pulled: $images_pulled_count,
+    new_images_pulled: $new_images,
     num_services: $services,
-    images_pulled: $images_pulled
+    all_images: $all_images
   }' > "${RESULTS_DIR}/${RUN_LABEL}.json"
 
 echo ""
 echo "--- Result: ${RUN_LABEL} ---"
-echo "Duration:      ${DURATION_S}s"
-echo "Images pulled: ${NUM_IMAGES_PULLED}"
-echo "Services:      ${NUM_SERVICES}"
+echo "Duration:       ${DURATION_S}s"
+echo "New images:     ${NUM_NEW_IMAGES}"
+echo "Services:       ${NUM_SERVICES}"
 echo ""
 
 # Clean up enclave to free resources for next run.
