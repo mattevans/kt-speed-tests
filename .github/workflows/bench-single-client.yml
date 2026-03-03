@@ -1,0 +1,72 @@
+name: "Bench: Single Client (geth/lighthouse)"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+env:
+  KURTOSIS_VERSION: "1.16.4"
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Kurtosis CLI
+        run: |
+          curl -LO "https://github.com/kurtosis-tech/kurtosis-cli-release-artifacts/releases/download/${KURTOSIS_VERSION}/kurtosis-cli_${KURTOSIS_VERSION}_linux_amd64.tar.gz"
+          tar -xzf "kurtosis-cli_${KURTOSIS_VERSION}_linux_amd64.tar.gz"
+          sudo mv kurtosis /usr/local/bin/
+          kurtosis analytics disable
+          kurtosis version
+
+      - name: Start Kurtosis engine
+        run: kurtosis engine start
+
+      - name: Docker info
+        run: |
+          docker info
+          echo "--- Existing images ---"
+          docker images
+
+      # Run 1: Cold cache — force pull everything.
+      - name: "Run 1: Cold cache (--image-download always)"
+        env:
+          RESULTS_DIR: ./results
+        run: |
+          ./scripts/run-benchmark.sh configs/single-client.yaml single-cold always
+
+      # Images are now cached from Run 1.
+
+      # Run 2: Warm cache — use cached images.
+      - name: "Run 2: Warm cache (--image-download missing)"
+        env:
+          RESULTS_DIR: ./results
+        run: |
+          ./scripts/run-benchmark.sh configs/single-client.yaml single-warm missing
+
+      # Run 3: Warm cache but always-pull — measures pull overhead with cached layers.
+      - name: "Run 3: Warm cache + always pull (--image-download always)"
+        env:
+          RESULTS_DIR: ./results
+        run: |
+          ./scripts/run-benchmark.sh configs/single-client.yaml single-warm-always-pull always
+
+      - name: Generate summary
+        env:
+          RESULTS_DIR: ./results
+        run: ./scripts/summarize.sh ./results
+
+      - name: Write job summary
+        run: cat ./results/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: single-client-results
+          path: ./results/
+          retention-days: 90
