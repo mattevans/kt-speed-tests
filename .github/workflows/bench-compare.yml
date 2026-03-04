@@ -11,7 +11,7 @@ on:
         default: "bench-baseline"
       configs:
         description: "Config files (space-separated)"
-        default: "configs/single-client.yaml"
+        default: "configs/single-client.yaml configs/multi-client.yaml"
 
 permissions:
   contents: write
@@ -19,7 +19,7 @@ permissions:
 jobs:
   benchmark:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
 
@@ -44,7 +44,7 @@ jobs:
           BASELINE_BRANCH: ${{ inputs.baseline_branch }}
           PATCHED_BRANCH: ${{ inputs.patched_branch }}
           CONFIGS: ${{ inputs.configs }}
-          PACKAGE_REFS: "github.com/ethpandaops/ethereum-package"
+          PACKAGE_REFS: "local github.com/ethpandaops/ethereum-package"
           RESULTS_DIR: ./results
         run: ./scripts/run-suite.sh
 
