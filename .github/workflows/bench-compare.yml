@@ -1,0 +1,68 @@
+name: "Bench: Baseline vs Patched"
+
+on:
+  workflow_dispatch:
+    inputs:
+      patched_branch:
+        description: "Patched kurtosis branch"
+        default: "refactor/boot-perf"
+      baseline_branch:
+        description: "Baseline kurtosis branch"
+        default: "bench-baseline"
+      configs:
+        description: "Config files (space-separated)"
+        default: "configs/single-client.yaml"
+
+permissions:
+  contents: write
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Docker info
+        run: |
+          docker info
+          echo "--- Existing images ---"
+          docker images
+
+      - name: Run benchmark suite
+        env:
+          BASELINE_BRANCH: ${{ inputs.baseline_branch }}
+          PATCHED_BRANCH: ${{ inputs.patched_branch }}
+          CONFIGS: ${{ inputs.configs }}
+          PACKAGE_REFS: "github.com/ethpandaops/ethereum-package"
+          RESULTS_DIR: ./results
+        run: ./scripts/run-suite.sh
+
+      - name: Write job summary
+        if: always()
+        run: |
+          if [[ -f ./results/summary.md ]]; then
+            cat ./results/summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bench-comparison-results
+          path: ./results/
+          retention-days: 90
+
+      - name: Deploy report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./results
+          publish_branch: gh-pages
+          force_orphan: true

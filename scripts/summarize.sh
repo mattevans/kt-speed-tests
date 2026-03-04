@@ -1,106 +1,193 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# summarize.sh — Combine all benchmark result JSON files into a markdown summary.
+# summarize.sh — Generate benchmark comparison tables (baseline vs patched).
 #
 # Usage: ./scripts/summarize.sh <results-dir>
+#
+# Detects whether results contain baseline/patched pairs and renders accordingly.
+# Falls back to a simple table if no pairs are found (backwards compat).
 
 RESULTS_DIR="${1:?Usage: summarize.sh <results-dir>}"
 SUMMARY_FILE="${RESULTS_DIR}/summary.md"
 
+# Helper: format seconds with 2 decimal places.
+fmt_s() { printf "%.2f" "$1"; }
+
+# Helper: compute delta and improvement percentage.
+# Args: baseline_s patched_s
+# Output: "delta improvement_pct" (e.g. "-8.40 25.1")
+compute_delta() {
+  local base="$1" patch="$2"
+  echo | awk -v b="${base}" -v p="${patch}" '{
+    delta = p - b
+    if (b != 0) pct = ((b - p) / b) * 100
+    else pct = 0
+    printf "%.2f %.1f", delta, pct
+  }'
+}
+
 {
-  echo "# Kurtosis Boot Speed Benchmark Results"
+  echo "# Kurtosis Benchmark: Baseline vs Patched"
   echo ""
   echo "**Runner:** $(uname -m) / $(uname -s)"
   echo "**Date:** $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-  echo "**Kurtosis:** $(kurtosis version 2>/dev/null | head -1 || echo 'unknown')"
+
+  # Load build info if available.
+  BUILD_INFO="${RESULTS_DIR}/build-info.json"
+  if [[ -f "${BUILD_INFO}" ]]; then
+    BASELINE_BRANCH=$(jq -r '.baseline_branch' "${BUILD_INFO}")
+    BASELINE_SHA=$(jq -r '.baseline_sha' "${BUILD_INFO}")
+    PATCHED_BRANCH=$(jq -r '.patched_branch' "${BUILD_INFO}")
+    PATCHED_SHA=$(jq -r '.patched_sha' "${BUILD_INFO}")
+    echo "**Baseline:** ${BASELINE_BRANCH} (${BASELINE_SHA})"
+    echo "**Patched:** ${PATCHED_BRANCH} (${PATCHED_SHA})"
+  fi
   echo ""
 
-  # Timing table.
-  echo "## Timing Summary"
-  echo ""
-  echo "| Run | Config | Image Mode | Duration (s) | New Images | Services |"
-  echo "|-----|--------|------------|--------------|------------|----------|"
-
+  # Check for failed runs.
   shopt -s nullglob
-  JSON_FILES=("${RESULTS_DIR}"/*.json)
+  ALL_CHECK_FILES=("${RESULTS_DIR}"/*.json)
+  shopt -u nullglob
+  FAILED_RUNS=()
+  for f in "${ALL_CHECK_FILES[@]}"; do
+    [[ "$(basename "$f")" == "build-info.json" ]] && continue
+    EXIT_CODE=$(jq -r '.exit_code // 0' "$f")
+    if [[ "${EXIT_CODE}" != "0" ]]; then
+      LABEL=$(jq -r '.label // "unknown"' "$f")
+      FAILED_RUNS+=("${LABEL} (exit ${EXIT_CODE})")
+    fi
+  done
+  if [[ ${#FAILED_RUNS[@]} -gt 0 ]]; then
+    echo "> **WARNING: Benchmark failures detected.** Results below are **not valid** for comparison — a failed run terminates early, making it appear artificially faster. Fix the failing runs and try again."
+    echo ">"
+    for fr in "${FAILED_RUNS[@]}"; do
+      echo "> - \`${fr}\`"
+    done
+    echo ""
+  fi
+
+  # Collect baseline/patched pairs.
+  # File naming: baseline-<config>-<pkg>.json / patched-<config>-<pkg>.json
+  shopt -s nullglob
+  BASELINE_FILES=("${RESULTS_DIR}"/baseline-*.json)
   shopt -u nullglob
 
-  for result_file in "${JSON_FILES[@]}"; do
-    LABEL=$(jq -r '.label // "unknown"' "${result_file}")
-    CONFIG=$(basename "$(jq -r '.config // "unknown"' "${result_file}")")
-    MODE=$(jq -r '.image_download_mode // "unknown"' "${result_file}")
-    DURATION=$(jq -r '.duration_seconds // 0' "${result_file}")
-    IMAGES=$(jq -r '.new_images_pulled // 0' "${result_file}")
-    SERVICES=$(jq -r '.num_services // "0"' "${result_file}")
-    echo "| ${LABEL} | ${CONFIG} | ${MODE} | ${DURATION} | ${IMAGES} | ${SERVICES} |"
-  done
+  if [[ ${#BASELINE_FILES[@]} -gt 0 ]]; then
+    # ── Comparison mode ──
 
-  echo ""
-
-  # Pairwise comparisons.
-  echo "## Analysis"
-  echo ""
-
-  for prefix in "single" "multi"; do
-    COLD_FILE="${RESULTS_DIR}/${prefix}-cold.json"
-    WARM_FILE="${RESULTS_DIR}/${prefix}-warm.json"
-    WARM_ALWAYS_FILE="${RESULTS_DIR}/${prefix}-warm-always-pull.json"
-
-    if [ ! -f "${COLD_FILE}" ]; then
-      continue
-    fi
-
-    COLD=$(jq -r '.duration_seconds' "${COLD_FILE}")
-    echo "### ${prefix}-client"
+    echo "## Wall Clock Comparison"
     echo ""
+    echo "| Config | Package | Baseline | Patched | Delta | Improvement |"
+    echo "|--------|---------|----------|---------|-------|-------------|"
 
-    if [ -f "${WARM_FILE}" ]; then
-      WARM=$(jq -r '.duration_seconds' "${WARM_FILE}")
-      DIFF_CW=$(echo "scale=2; ${COLD} - ${WARM}" | bc)
-      PCT_CW=$(echo "scale=1; (${DIFF_CW} / ${COLD}) * 100" | bc)
-      echo "| Comparison | Time | Delta |"
-      echo "|------------|------|-------|"
-      echo "| Cold (pull all from scratch) | **${COLD}s** | baseline |"
-      echo "| Warm (\`--image-download missing\`) | **${WARM}s** | **-${DIFF_CW}s** (${PCT_CW}% faster) |"
+    # Track pairs for phase breakdown later.
+    PAIRS=()
 
-      if [ -f "${WARM_ALWAYS_FILE}" ]; then
-        WARM_ALWAYS=$(jq -r '.duration_seconds' "${WARM_ALWAYS_FILE}")
-        DIFF_WA=$(echo "scale=2; ${WARM_ALWAYS} - ${WARM}" | bc)
-        echo "| Warm (\`--image-download always\`) | **${WARM_ALWAYS}s** | **+${DIFF_WA}s** vs warm (registry check overhead) |"
+    for baseline_file in "${BASELINE_FILES[@]}"; do
+      base_name=$(basename "${baseline_file}" .json)
+      suffix="${base_name#baseline-}"
+      patched_file="${RESULTS_DIR}/patched-${suffix}.json"
+
+      if [[ ! -f "${patched_file}" ]]; then
+        continue
       fi
 
-      echo ""
-      echo "**Image pull cost:** ${DIFF_CW}s of the cold boot is spent pulling images."
-      echo ""
+      PAIRS+=("${suffix}")
 
-      if [ -f "${WARM_ALWAYS_FILE}" ]; then
-        WARM_ALWAYS=$(jq -r '.duration_seconds' "${WARM_ALWAYS_FILE}")
-        DIFF_WA=$(echo "scale=2; ${WARM_ALWAYS} - ${WARM}" | bc)
-        echo "**Registry check overhead:** Even with cached images, \`always\` mode adds ${DIFF_WA}s just verifying digests against registries."
+      CONFIG=$(jq -r '.config' "${baseline_file}" | xargs basename | sed 's/\.yaml$//')
+      # Extract package label from the suffix (e.g. "single-local" → "local").
+      PKG_LABEL="${suffix##*-}"
+
+      BASE_DUR=$(jq -r '.duration_seconds' "${baseline_file}")
+      PATCH_DUR=$(jq -r '.duration_seconds' "${patched_file}")
+
+      read -r DELTA PCT <<< "$(compute_delta "${BASE_DUR}" "${PATCH_DUR}")"
+
+      echo "| ${CONFIG} | ${PKG_LABEL} | $(fmt_s "${BASE_DUR}")s | $(fmt_s "${PATCH_DUR}")s | ${DELTA}s | ${PCT}% |"
+    done
+
+    echo ""
+
+    # ── Phase breakdowns for each pair ──
+
+    for suffix in "${PAIRS[@]}"; do
+      baseline_file="${RESULTS_DIR}/baseline-${suffix}.json"
+      patched_file="${RESULTS_DIR}/patched-${suffix}.json"
+
+      CONFIG=$(jq -r '.config' "${baseline_file}" | xargs basename | sed 's/\.yaml$//')
+      PKG_LABEL="${suffix##*-}"
+
+      # Get phase keys from both files (union).
+      BASE_PHASES=$(jq -r '.apic_phases // {} | keys[]' "${baseline_file}" 2>/dev/null || true)
+      PATCH_PHASES=$(jq -r '.apic_phases // {} | keys[]' "${patched_file}" 2>/dev/null || true)
+      ALL_PHASES=$(printf '%s\n%s\n' "${BASE_PHASES}" "${PATCH_PHASES}" | sort -u | grep -v '^$' || true)
+
+      if [[ -z "${ALL_PHASES}" ]]; then
+        continue
+      fi
+
+      echo "## APIC Phase Breakdown: ${CONFIG} / ${PKG_LABEL}"
+      echo ""
+      echo "| Phase | Baseline | Patched | Delta |"
+      echo "|-------|----------|---------|-------|"
+
+      while IFS= read -r phase; do
+        BASE_VAL=$(jq -r --arg p "${phase}" '.apic_phases[$p] // 0' "${baseline_file}")
+        PATCH_VAL=$(jq -r --arg p "${phase}" '.apic_phases[$p] // 0' "${patched_file}")
+        read -r DELTA _ <<< "$(compute_delta "${BASE_VAL}" "${PATCH_VAL}")"
+        echo "| ${phase} | $(fmt_s "${BASE_VAL}")s | $(fmt_s "${PATCH_VAL}")s | ${DELTA}s |"
+      done <<< "${ALL_PHASES}"
+
+      echo ""
+    done
+
+  else
+    # ── Fallback: simple table (no baseline/patched pairs) ──
+
+    echo "## Timing Summary"
+    echo ""
+    echo "| Run | Config | Image Mode | Duration (s) | New Images | Services |"
+    echo "|-----|--------|------------|--------------|------------|----------|"
+
+    shopt -s nullglob
+    JSON_FILES=("${RESULTS_DIR}"/*.json)
+    shopt -u nullglob
+
+    for result_file in "${JSON_FILES[@]}"; do
+      # Skip build-info.json.
+      [[ "$(basename "${result_file}")" == "build-info.json" ]] && continue
+
+      LABEL=$(jq -r '.label // "unknown"' "${result_file}")
+      CONFIG=$(basename "$(jq -r '.config // "unknown"' "${result_file}")")
+      MODE=$(jq -r '.image_download_mode // "unknown"' "${result_file}")
+      DURATION=$(jq -r '.duration_seconds // 0' "${result_file}")
+      IMAGES=$(jq -r '.new_images_pulled // 0' "${result_file}")
+      SERVICES=$(jq -r '.num_services // "0"' "${result_file}")
+      echo "| ${LABEL} | ${CONFIG} | ${MODE} | ${DURATION} | ${IMAGES} | ${SERVICES} |"
+    done
+
+    echo ""
+
+    # APIC phases if present in any result.
+    for result_file in "${JSON_FILES[@]}"; do
+      [[ "$(basename "${result_file}")" == "build-info.json" ]] && continue
+
+      PHASES=$(jq -r '.apic_phases // {} | keys[]' "${result_file}" 2>/dev/null || true)
+      if [[ -n "${PHASES}" ]]; then
+        LABEL=$(jq -r '.label // "unknown"' "${result_file}")
+        echo "### APIC Phases: ${LABEL}"
+        echo ""
+        echo "| Phase | Duration |"
+        echo "|-------|----------|"
+        while IFS= read -r phase; do
+          VAL=$(jq -r --arg p "${phase}" '.apic_phases[$p] // 0' "${result_file}")
+          echo "| ${phase} | $(fmt_s "${VAL}")s |"
+        done <<< "${PHASES}"
         echo ""
       fi
-
-      echo "**Pure orchestration time:** ${WARM}s (warm cache, no registry checks)."
-      echo ""
-    fi
-  done
-
-  # Images list for cold runs.
-  echo "## Docker Images Used"
-  echo ""
-  shopt -s nullglob
-  COLD_FILES=("${RESULTS_DIR}"/*-cold.json)
-  shopt -u nullglob
-
-  for result_file in "${COLD_FILES[@]}"; do
-    LABEL=$(jq -r '.label // "unknown"' "${result_file}")
-    echo "### ${LABEL}"
-    echo '```'
-    jq -r '.all_images[]?' "${result_file}" 2>/dev/null || echo "(none)"
-    echo '```'
-    echo ""
-  done
+    done
+  fi
 
 } > "${SUMMARY_FILE}"
 

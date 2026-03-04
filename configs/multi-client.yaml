@@ -1,6 +1,6 @@
 participants:
   - el_type: geth
-    cl_type: lighthouse
+    cl_type: prysm
   - el_type: reth
     cl_type: teku
   - el_type: nethermind
@@ -8,7 +8,7 @@ participants:
   - el_type: geth
     cl_type: teku
   - el_type: reth
-    cl_type: lighthouse
+    cl_type: grandine
   - el_type: nethermind
     cl_type: nimbus
   - el_type: geth
@@ -16,11 +16,28 @@ participants:
   - el_type: reth
     cl_type: teku
   - el_type: nethermind
-    cl_type: lighthouse
+    cl_type: prysm
 network_params:
   preset: minimal
   genesis_delay: 5
   electra_fork_epoch: 0
   fulu_fork_epoch: 18446744073709551615
 parallel_keystore_generation: true
-additional_services: []
+additional_services:
+  - dora
+  - spamoor
+dora_params:
+  image: "ethpandaops/dora:latest"
+spamoor_params:
+  image: "ethpandaops/spamoor:latest"
+  max_mem: 4000
+  spammers:
+    - scenario: eoatx
+      config:
+        throughput: 200
+    - scenario: blobs
+      config:
+        throughput: 20
+docker_cache_params:
+  enabled: true
+  url: "docker.ethquokkaops.io"
