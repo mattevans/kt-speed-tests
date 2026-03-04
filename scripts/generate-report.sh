@@ -177,6 +177,7 @@ if [[ "${HAS_PAIRS}" == "true" ]]; then
     PATCH_SVCS=$(jq -r '.num_services // "?"' "${patched_file}")
     BASE_CMD=$(jq -r '.command // ""' "${baseline_file}")
     PATCH_CMD=$(jq -r '.command // ""' "${patched_file}")
+    CONFIG_PATH=$(jq -r '.config // ""' "${baseline_file}")
     read -r DELTA PCT <<< "$(compute_delta "${BASE_DUR}" "${PATCH_DUR}")"
 
     BASE_FMT=$(fmt_s "${BASE_DUR}")
@@ -218,28 +219,56 @@ if [[ "${HAS_PAIRS}" == "true" ]]; then
               <td class=\"py-3.5 pr-4 text-right text-xs text-gray-400\">${BASE_SVCS} / ${PATCH_SVCS}</td>
             </tr>"
 
-    # Run details accordion row.
-    if [[ -n "${BASE_CMD}" || -n "${PATCH_CMD}" ]]; then
-      # Normalize command paths for display.
+    # Run details accordion row — commands + config YAML.
+    HAS_CMDS=false
+    [[ -n "${BASE_CMD}" || -n "${PATCH_CMD}" ]] && HAS_CMDS=true
+
+    # Read config YAML if the file exists.
+    CONFIG_YAML=""
+    if [[ -n "${CONFIG_PATH}" && -f "${CONFIG_PATH}" ]]; then
+      # HTML-escape the YAML: & < >
+      CONFIG_YAML=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g' "${CONFIG_PATH}")
+    fi
+
+    if [[ "${HAS_CMDS}" == "true" || -n "${CONFIG_YAML}" ]]; then
       DISPLAY_BASE_CMD=$(echo "${BASE_CMD}" | sed 's|[^ ]*/kurtosis|kurtosis|')
       DISPLAY_PATCH_CMD=$(echo "${PATCH_CMD}" | sed 's|[^ ]*/kurtosis|kurtosis|')
+
+      DETAILS_INNER=""
+
+      # Commands section.
+      if [[ "${HAS_CMDS}" == "true" ]]; then
+        DETAILS_INNER+="
+                    <div class=\"grid grid-cols-1 md:grid-cols-2 gap-3\">
+                      <div>
+                        <div class=\"text-xs font-medium text-gray-500 mb-1\">Baseline command</div>
+                        <code class=\"block text-xs bg-gray-900 text-gray-100 p-2.5 rounded-xs overflow-x-auto whitespace-pre\">${DISPLAY_BASE_CMD}</code>
+                      </div>
+                      <div>
+                        <div class=\"text-xs font-medium text-gray-500 mb-1\">Patched command</div>
+                        <code class=\"block text-xs bg-gray-900 text-gray-100 p-2.5 rounded-xs overflow-x-auto whitespace-pre\">${DISPLAY_PATCH_CMD}</code>
+                      </div>
+                    </div>"
+      fi
+
+      # Config YAML section.
+      if [[ -n "${CONFIG_YAML}" ]]; then
+        DETAILS_INNER+="
+                    <div class=\"mt-3\">
+                      <div class=\"text-xs font-medium text-gray-500 mb-1\">Config: ${CONFIG_PATH}</div>
+                      <pre class=\"text-xs bg-gray-900 text-gray-100 p-2.5 rounded-xs overflow-x-auto\"><code>${CONFIG_YAML}</code></pre>
+                    </div>"
+      fi
+
       TABLE_ROWS+="
             <tr class=\"border-b border-gray-50\">
               <td colspan=\"6\" class=\"px-0 py-0\">
                 <details>
                   <summary class=\"flex items-center gap-2 px-4 py-2 text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50\">
                     <svg class=\"chevron size-3 shrink-0\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M9 5l7 7-7 7\"/></svg>
-                    Run details
+                    Run details &amp; config
                   </summary>
-                  <div class=\"px-4 pb-3 grid grid-cols-1 md:grid-cols-2 gap-3\">
-                    <div>
-                      <div class=\"text-xs font-medium text-gray-500 mb-1\">Baseline command</div>
-                      <code class=\"block text-xs bg-gray-900 text-gray-100 p-2.5 rounded-xs overflow-x-auto whitespace-pre\">${DISPLAY_BASE_CMD}</code>
-                    </div>
-                    <div>
-                      <div class=\"text-xs font-medium text-gray-500 mb-1\">Patched command</div>
-                      <code class=\"block text-xs bg-gray-900 text-gray-100 p-2.5 rounded-xs overflow-x-auto whitespace-pre\">${DISPLAY_PATCH_CMD}</code>
-                    </div>
+                  <div class=\"px-4 pb-3\">${DETAILS_INNER}
                   </div>
                 </details>
               </td>
