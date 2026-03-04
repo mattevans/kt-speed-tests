@@ -1,0 +1,294 @@
+[33mWARN[0m[2026-03-04T05:01:33Z] An error occurred getting the running engine's version; you may be running an out-of-date engine version 
+[36mINFO[0m[2026-03-04T05:01:33Z] [BENCH] kurtosis run starting                
+[33mWARN[0m[2026-03-04T05:01:33Z] We expected the running engine version to match format X.Y.Z, but instead got '9b50ac'; this means that we can't verify the API library and engine versions match so you may encounter runtime errors 
+[36mINFO[0m[2026-03-04T05:01:33Z] [BENCH] engine connect completed in 1.207289ms 
+[36mINFO[0m[2026-03-04T05:01:33Z] Creating a new enclave for Starlark to run inside... 
+[36mINFO[0m[2026-03-04T05:01:34Z] Enclave 'bench-patched-single-remote' created successfully 
+[36mINFO[0m[2026-03-04T05:01:34Z] [BENCH] enclave creation completed in 833.766565ms 
+[36mINFO[0m[2026-03-04T05:01:34Z] [BENCH] execute call (upload+start stream) completed in 1.197434ms 
+[36mINFO[0m[2026-03-04T05:01:34Z] Kurtosis CLI is running in a non interactive terminal. Everything will work but progress information and the progress bar will not be displayed. 
+Starlark code successfully run. Output was:
+{
+	"all_participants": [
+		{
+			"cl_context": {
+				"beacon_grpc_url": "",
+				"beacon_http_url": "http://cl-1-teku-geth:4000",
+				"beacon_service_name": "cl-1-teku-geth",
+				"cl_nodes_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "cl-1-teku-geth",
+						"path": "/metrics",
+						"url": "cl-1-teku-geth:8008"
+					}
+				],
+				"client_name": "teku",
+				"enr": "enr:-LK4QJM3Gt_GQVzWCl1XP98SnIRN9upxHcpwYtGZorxRwY0-e7_NvH5t9JJsA65qb33Nr_gTYMzGuU7Jbv-QhgZLlpAEh2F0dG5ldHOIgAEAAAAAAACEZXRoMpDRHCV2YAAAOP__________gmlkgnY0gmlwhKwQAAyJc2VjcDI1NmsxoQJ9l2zN7-zs1KQap2Yacam5gR8XBn7n5GwumXOIjDPP2YN0Y3CCIyiDdWRwgiMo",
+				"http_port": 4000,
+				"ip_addr": "cl-1-teku-geth",
+				"ip_address": "",
+				"multiaddr": "/ip4/172.16.0.12/tcp/9000/p2p/16Uiu2HAm3svs2JqHcrbZq32SUzfyfMQqmEhbLo5L9JWncNUYYqtc",
+				"peer_id": "16Uiu2HAm3svs2JqHcrbZq32SUzfyfMQqmEhbLo5L9JWncNUYYqtc",
+				"snooper_el_engine_context": null,
+				"snooper_enabled": false,
+				"supernode": false,
+				"validator_keystore_files_artifact_uuid": "1-teku-geth-0-127"
+			},
+			"cl_type": "teku",
+			"el_context": {
+				"client_name": "geth",
+				"dns_name": "el-1-geth-teku",
+				"el_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "el-1-geth-teku",
+						"path": "/debug/metrics/prometheus",
+						"url": "el-1-geth-teku:9001"
+					}
+				],
+				"engine_rpc_port_num": 8551,
+				"enode": "enode://6ea197f933a76e79f25b2d6e2b7df4ccb43f7c8595ae6b9316f4ab04e97a8cea85d44f0351737ccc5cf4d5ceceef6409f5a78a9622de639ee2346fc3683ef8ed@172.16.0.10:30303",
+				"enr": "enr:-KO4QAB9kthqkmQzygFrGHlBX_DalRwY3bZXW9t6q0dQreSyXJoi3vOcdp7vd0kd1u7BNc6G7q9-xr10RqkempzYFKKGAZy3OR6Ng2V0aMfGhMSnz-WAgmlkgnY0gmlwhKwQAAqJc2VjcDI1NmsxoQNuoZf5M6duefJbLW4rffTMtD98hZWua5MW9KsE6XqM6oRzbmFwwIN0Y3CCdl-DdWRwgnZf",
+				"ip_addr": "172.16.0.10",
+				"rpc_http_url": "http://el-1-geth-teku:8545",
+				"rpc_port_num": 8545,
+				"service_name": "el-1-geth-teku",
+				"ws_port_num": 8546,
+				"ws_url": "ws://el-1-geth-teku:8546"
+			},
+			"el_type": "geth",
+			"ethereum_metrics_exporter_context": null,
+			"remote_signer_context": null,
+			"remote_signer_type": "web3signer",
+			"snooper_beacon_context": null,
+			"snooper_el_engine_context": null,
+			"snooper_el_rpc_context": null,
+			"vc_context": null,
+			"vc_type": "teku",
+			"xatu_sentry_context": null
+		}
+	],
+	"blockscout_sc_verif_url": null,
+	"final_genesis_timestamp": "1772600511",
+	"genesis_validators_root": "0xd1ec305b97bf6336571c2348e4a8bf173684b0cdb7e55f7e6554d51f8478b5a3",
+	"grafana_info": {
+		"dashboard_path": "/d/QdTOwy-nz/eth2-merge-kurtosis-module-dashboard?orgId=1",
+		"password": "admin",
+		"user": "admin"
+	},
+	"network_id": "3151908",
+	"network_params": {
+		"additional_mnemonics": [],
+		"additional_preloaded_contracts": {},
+		"aggregate_due_bps_gloas": 5000,
+		"altair_fork_epoch": 0,
+		"attestation_due_bps_gloas": 2500,
+		"base_fee_update_fraction_electra": 5007716,
+		"bellatrix_fork_epoch": 0,
+		"bpo_1_base_fee_update_fraction": 8346193,
+		"bpo_1_epoch": 18446744073709551615,
+		"bpo_1_max_blobs": 15,
+		"bpo_1_target_blobs": 10,
+		"bpo_2_base_fee_update_fraction": 11684671,
+		"bpo_2_epoch": 18446744073709551615,
+		"bpo_2_max_blobs": 21,
+		"bpo_2_target_blobs": 14,
+		"bpo_3_base_fee_update_fraction": 0,
+		"bpo_3_epoch": 18446744073709551615,
+		"bpo_3_max_blobs": 0,
+		"bpo_3_target_blobs": 0,
+		"bpo_4_base_fee_update_fraction": 0,
+		"bpo_4_epoch": 18446744073709551615,
+		"bpo_4_max_blobs": 0,
+		"bpo_4_target_blobs": 0,
+		"bpo_5_base_fee_update_fraction": 0,
+		"bpo_5_epoch": 18446744073709551615,
+		"bpo_5_max_blobs": 0,
+		"bpo_5_target_blobs": 0,
+		"capella_fork_epoch": 0,
+		"churn_limit_quotient": 32,
+		"contribution_due_bps_gloas": 5000,
+		"custody_requirement": 4,
+		"data_column_sidecar_subnet_count": 128,
+		"deneb_fork_epoch": 0,
+		"deposit_contract_address": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
+		"devnet_repo": "ethpandaops",
+		"eip7441_fork_epoch": 18446744073709551615,
+		"ejection_balance": 16000000000,
+		"electra_fork_epoch": 0,
+		"eth1_follow_distance": 16,
+		"force_snapshot_sync": false,
+		"fulu_fork_epoch": 18446744073709551615,
+		"gas_limit": 0,
+		"genesis_delay": 5,
+		"genesis_gaslimit": 60000000,
+		"genesis_time": 0,
+		"gloas_fork_epoch": 18446744073709551615,
+		"heze_fork_epoch": 18446744073709551615,
+		"inclusion_list_submission_due_bps": 6667,
+		"max_blobs_per_block_electra": 9,
+		"max_payload_size": 10485760,
+		"max_per_epoch_activation_churn_limit": 4,
+		"max_request_blob_sidecars_electra": 1152,
+		"max_request_blocks_deneb": 128,
+		"min_builder_withdrawability_delay": 8,
+		"min_epochs_for_block_requests": 272,
+		"min_epochs_for_data_column_sidecars_requests": 4096,
+		"min_validator_withdrawability_delay": 256,
+		"network": "kurtosis",
+		"network_id": "3151908",
+		"network_sync_base_url": "https://snapshots.ethpandaops.io/",
+		"num_validator_keys_per_node": 128,
+		"payload_attestation_due_bps": 7500,
+		"perfect_peerdas_enabled": false,
+		"prefunded_accounts": {},
+		"preregistered_validator_count": 0,
+		"preregistered_validator_keys_mnemonic": "giant issue aisle success illegal bike spike question tent bar rely arctic volcano long crawl hungry vocal artwork sniff fantasy very lucky have athlete",
+		"preset": "minimal",
+		"proposer_inclusion_list_cutoff_bps": 9167,
+		"samples_per_slot": 8,
+		"seconds_per_slot": 6,
+		"shadowfork_block_height": "latest",
+		"shard_committee_period": 64,
+		"slot_duration_ms": 6000,
+		"sync_message_due_bps_gloas": 2500,
+		"target_blobs_per_block_electra": 6,
+		"validator_balance": 32,
+		"view_freeze_cutoff_bps": 7500,
+		"withdrawal_address": "0x8943545177806ED17B9F23F0a21ee5948eCaa776",
+		"withdrawal_type": "0x00"
+	},
+	"pre_funded_accounts": [
+		{
+			"address": "0x8943545177806ED17B9F23F0a21ee5948eCaa776",
+			"private_key": "bcdf20249abf0ed6d944c0288fad489e33f66b3960d9e6229c1cd214ed3bbe31"
+		},
+		{
+			"address": "0xE25583099BA105D9ec0A67f5Ae86D90e50036425",
+			"private_key": "39725efee3fb28614de3bacaffe4cc4bd8c436257e2c8bb887c4b5c4be45e76d"
+		},
+		{
+			"address": "0x614561D2d143621E126e87831AEF287678B442b8",
+			"private_key": "53321db7c1e331d93a11a41d16f004d7ff63972ec8ec7c25db329728ceeb1710"
+		},
+		{
+			"address": "0xf93Ee4Cf8c6c40b329b0c0626F28333c132CF241",
+			"private_key": "ab63b23eb7941c1251757e24b3d2350d2bc05c3c388d06f8fe6feafefb1e8c70"
+		},
+		{
+			"address": "0x802dCbE1B1A97554B4F50DB5119E37E8e7336417",
+			"private_key": "5d2344259f42259f82d2c140aa66102ba89b57b4883ee441a8b312622bd42491"
+		},
+		{
+			"address": "0xAe95d8DA9244C37CaC0a3e16BA966a8e852Bb6D6",
+			"private_key": "27515f805127bebad2fb9b183508bdacb8c763da16f54e0678b16e8f28ef3fff"
+		},
+		{
+			"address": "0x2c57d1CFC6d5f8E4182a56b4cf75421472eBAEa4",
+			"private_key": "7ff1a4c1d57e5e784d327c4c7651e952350bc271f156afb3d00d20f5ef924856"
+		},
+		{
+			"address": "0x741bFE4802cE1C4b5b00F9Df2F5f179A1C89171A",
+			"private_key": "3a91003acaf4c21b3953d94fa4a6db694fa69e5242b2e37be05dd82761058899"
+		},
+		{
+			"address": "0xc3913d4D8bAb4914328651C2EAE817C8b78E1f4c",
+			"private_key": "bb1d0f125b4fb2bb173c318cdead45468474ca71474e2247776b2b4c0fa2d3f5"
+		},
+		{
+			"address": "0x65D08a056c17Ae13370565B04cF77D2AfA1cB9FA",
+			"private_key": "850643a0224065ecce3882673c21f56bcf6eef86274cc21cadff15930b59fc8c"
+		},
+		{
+			"address": "0x3e95dFbBaF6B348396E6674C7871546dCC568e56",
+			"private_key": "94eb3102993b41ec55c241060f47daa0f6372e2e3ad7e91612ae36c364042e44"
+		},
+		{
+			"address": "0x5918b2e647464d4743601a865753e64C8059Dc4F",
+			"private_key": "daf15504c22a352648a71ef2926334fe040ac1d5005019e09f6c979808024dc7"
+		},
+		{
+			"address": "0x589A698b7b7dA0Bec545177D3963A2741105C7C9",
+			"private_key": "eaba42282ad33c8ef2524f07277c03a776d98ae19f581990ce75becb7cfa1c23"
+		},
+		{
+			"address": "0x4d1CB4eB7969f8806E2CaAc0cbbB71f88C8ec413",
+			"private_key": "3fd98b5187bf6526734efaa644ffbb4e3670d66f5d0268ce0323ec09124bff61"
+		},
+		{
+			"address": "0xF5504cE2BcC52614F121aff9b93b2001d92715CA",
+			"private_key": "5288e2f440c7f0cb61a9be8afdeb4295f786383f96f5e35eb0c94ef103996b64"
+		},
+		{
+			"address": "0xF61E98E7D47aB884C244E39E031978E33162ff4b",
+			"private_key": "f296c7802555da2a5a662be70e078cbd38b44f96f8615ae529da41122ce8db05"
+		},
+		{
+			"address": "0xf1424826861ffbbD25405F5145B5E50d0F1bFc90",
+			"private_key": "bf3beef3bd999ba9f2451e06936f0423cd62b815c9233dd3bc90f7e02a1e8673"
+		},
+		{
+			"address": "0xfDCe42116f541fc8f7b0776e2B30832bD5621C85",
+			"private_key": "6ecadc396415970e91293726c3f5775225440ea0844ae5616135fd10d66b5954"
+		},
+		{
+			"address": "0xD9211042f35968820A3407ac3d80C725f8F75c14",
+			"private_key": "a492823c3e193d6c595f37a18e3c06650cf4c74558cc818b16130b293716106f"
+		},
+		{
+			"address": "0xD8F3183DEF51A987222D845be228e0Bbb932C222",
+			"private_key": "c5114526e042343c6d1899cad05e1c00ba588314de9b96929914ee0df18d46b2"
+		},
+		{
+			"address": "0xafF0CA253b97e54440965855cec0A8a2E2399896",
+			"private_key": "04b9f63ecf84210c5366c66d68fa1f5da1fa4f634fad6dfc86178e4d79ff9e59"
+		}
+	]
+}
+[36mINFO[0m[2026-03-04T05:02:01Z] [BENCH] starlark run stream completed in 27.18634663s (total wall clock: 28.021392529s) 
+[36mINFO[0m[2026-03-04T05:02:01Z] ==================================================================== 
+[36mINFO[0m[2026-03-04T05:02:01Z] ||          Created enclave: bench-patched-single-remote          || 
+[36mINFO[0m[2026-03-04T05:02:01Z] ==================================================================== 
+Name:            bench-patched-single-remote
+UUID:            303ae0cefde7
+Status:          RUNNING
+Creation Time:   Wed, 04 Mar 2026 05:01:33 UTC
+Flags:           
+
+========================================= Files Artifacts =========================================
+UUID           Name
+092fcae51b17   1-teku-geth-0-127
+d8551914393a   dora-config
+78741831e73b   el_cl_genesis_data
+1dd29dbd17f2   final-genesis-timestamp
+9c440fa47699   genesis-el-cl-env-file
+e15152e202e7   genesis_validators_root
+41a979400ad7   jwt_file
+7b4360d278fa   keymanager_file
+138b8ec6b874   prysm-password
+49dcbb1f1f6c   spamoor-config
+04a682bc8611   validator-ranges
+
+========================================== User Services ==========================================
+UUID           Name                                               Ports                                         Status
+ddc71bc7b538   cl-1-teku-geth                                     http: 4000/tcp -> http://127.0.0.1:32977      RUNNING
+                                                                  metrics: 8008/tcp -> http://127.0.0.1:32978   
+                                                                  tcp-discovery: 9000/tcp -> 127.0.0.1:32979    
+                                                                  udp-discovery: 9000/udp                       
+ec0eb03d90d4   dora                                               http: 8080/tcp -> http://127.0.0.1:32976      RUNNING
+75de8743846f   el-1-geth-teku                                     engine-rpc: 8551/tcp -> 127.0.0.1:32972       RUNNING
+                                                                  metrics: 9001/tcp -> http://127.0.0.1:32973   
+                                                                  rpc: 8545/tcp -> 127.0.0.1:32970              
+                                                                  tcp-discovery: 30303/tcp -> 127.0.0.1:32974   
+                                                                  udp-discovery: 30303/udp                      
+                                                                  ws: 8546/tcp -> 127.0.0.1:32971               
+5478430f44f3   spamoor                                            http: 8080/tcp -> http://127.0.0.1:32975      RUNNING
+7e020e11e8e3   validator-key-generation-cl-validator-keystore-0   <none>                                        RUNNING
+

@@ -1,0 +1,942 @@
+[33mWARN[0m[2026-03-04T05:02:02Z] An error occurred getting the running engine's version; you may be running an out-of-date engine version 
+[36mINFO[0m[2026-03-04T05:02:02Z] [BENCH] kurtosis run starting                
+[33mWARN[0m[2026-03-04T05:02:02Z] We expected the running engine version to match format X.Y.Z, but instead got '9b50ac'; this means that we can't verify the API library and engine versions match so you may encounter runtime errors 
+[36mINFO[0m[2026-03-04T05:02:02Z] [BENCH] engine connect completed in 1.144788ms 
+[36mINFO[0m[2026-03-04T05:02:02Z] Creating a new enclave for Starlark to run inside... 
+[36mINFO[0m[2026-03-04T05:02:03Z] Enclave 'bench-patched-multi-local' created successfully 
+[36mINFO[0m[2026-03-04T05:02:03Z] [BENCH] enclave creation completed in 822.145908ms 
+[36mINFO[0m[2026-03-04T05:02:03Z] Executing Starlark package at '/home/runner/work/kt-speed-tests/kt-speed-tests/ethereum-package' as the passed argument './ethereum-package' looks like a directory 
+[36mINFO[0m[2026-03-04T05:02:03Z] [BENCH] uploadStarlarkPackage starting for 'github.com/ethpandaops/ethereum-package' at './ethereum-package' 
+[36mINFO[0m[2026-03-04T05:02:03Z] [BENCH] content hash computed in 30.207248ms (hash=d6a089728f75c3507e11a6df4c882667) 
+[36mINFO[0m[2026-03-04T05:02:03Z] [BENCH] archive cache hit for hash=d6a089728f75c3507e11a6df4c882667, skipping compression 
+[36mINFO[0m[2026-03-04T05:02:03Z] [BENCH] package stream upload completed in 136.750029ms 
+[36mINFO[0m[2026-03-04T05:02:03Z] [BENCH] uploadStarlarkPackage total completed in 167.194694ms 
+[36mINFO[0m[2026-03-04T05:02:03Z] [BENCH] client-side uploadStarlarkPackage completed in 167.224249ms 
+[36mINFO[0m[2026-03-04T05:02:03Z] [BENCH] execute call (upload+start stream) completed in 167.796579ms 
+[36mINFO[0m[2026-03-04T05:02:03Z] Kurtosis CLI is running in a non interactive terminal. Everything will work but progress information and the progress bar will not be displayed. 
+Starlark code successfully run. Output was:
+{
+	"all_participants": [
+		{
+			"cl_context": {
+				"beacon_grpc_url": "cl-1-prysm-geth:4000",
+				"beacon_http_url": "http://cl-1-prysm-geth:3500",
+				"beacon_service_name": "cl-1-prysm-geth",
+				"cl_nodes_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "cl-1-prysm-geth",
+						"path": "/metrics",
+						"url": "cl-1-prysm-geth:8080"
+					}
+				],
+				"client_name": "prysm",
+				"enr": "enr:-Mq4QPnsZ5U9D2StjCCt2O0VrOIRolls4e3-4vTG3oUA8HNAR9g_lfETP812WdQm2AKJhYXX7AcRfZu3P7tpYFLMjUWGAZy3Ogedh2F0dG5ldHOIAAAAAAAYAACEZXRoMpDMBtFnYAAAOP__________gmlkgnY0gmlwhKwQABuEcXVpY4IyyIlzZWNwMjU2azGhA5nIyW6M4v47FjCqj4h9bN970WJdit1tDk1Z5pw_L5r1iHN5bmNuZXRzAIN0Y3CCMsiDdWRwgi7g",
+				"http_port": 3500,
+				"ip_addr": "cl-1-prysm-geth",
+				"ip_address": "",
+				"multiaddr": "/ip4/172.16.0.27/tcp/13000/p2p/16Uiu2HAmP1JJfEu8SgZXFwUHfHeEQA9Nhen9Ja7W65j8b6yRp61i",
+				"peer_id": "16Uiu2HAmP1JJfEu8SgZXFwUHfHeEQA9Nhen9Ja7W65j8b6yRp61i",
+				"snooper_el_engine_context": null,
+				"snooper_enabled": false,
+				"supernode": false,
+				"validator_keystore_files_artifact_uuid": "1-prysm-geth-0-127"
+			},
+			"cl_type": "prysm",
+			"el_context": {
+				"client_name": "geth",
+				"dns_name": "el-1-geth-prysm",
+				"el_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "el-1-geth-prysm",
+						"path": "/debug/metrics/prometheus",
+						"url": "el-1-geth-prysm:9001"
+					}
+				],
+				"engine_rpc_port_num": 8551,
+				"enode": "enode://a16301f54e3e6a20237c6e7346a733558a02516df0f208cd38b4ef0046aa96485e21f05e346fff768295a81ceabe9758640e74d162d4ba90ce8deac5bd277669@172.16.0.17:30303",
+				"enr": "enr:-KO4QNyURLHJoqo1lJJamuBFYaosF2JR4FIAgOL2Zsg9rIj9dOBMfO1IaTtc2wASVuyGQ9wIcnf3bko5icDzlf2mJOuGAZy3OaI5g2V0aMfGhN8uCNuAgmlkgnY0gmlwhKwQABGJc2VjcDI1NmsxoQOhYwH1Tj5qICN8bnNGpzNVigJRbfDyCM04tO8ARqqWSIRzbmFwwIN0Y3CCdl-DdWRwgnZf",
+				"ip_addr": "172.16.0.17",
+				"rpc_http_url": "http://el-1-geth-prysm:8545",
+				"rpc_port_num": 8545,
+				"service_name": "el-1-geth-prysm",
+				"ws_port_num": 8546,
+				"ws_url": "ws://el-1-geth-prysm:8546"
+			},
+			"el_type": "geth",
+			"ethereum_metrics_exporter_context": null,
+			"remote_signer_context": null,
+			"remote_signer_type": "web3signer",
+			"snooper_beacon_context": null,
+			"snooper_el_engine_context": null,
+			"snooper_el_rpc_context": null,
+			"vc_context": {
+				"client_name": "prysm",
+				"metrics_info": {
+					"config": {
+						"labels": null,
+						"scrape_interval": "15s"
+					},
+					"name": "vc-1-geth-prysm",
+					"path": "/metrics",
+					"url": "vc-1-geth-prysm:8080"
+				},
+				"service_name": "vc-1-geth-prysm"
+			},
+			"vc_type": "prysm",
+			"xatu_sentry_context": null
+		},
+		{
+			"cl_context": {
+				"beacon_grpc_url": "",
+				"beacon_http_url": "http://cl-2-teku-reth:4000",
+				"beacon_service_name": "cl-2-teku-reth",
+				"cl_nodes_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "cl-2-teku-reth",
+						"path": "/metrics",
+						"url": "cl-2-teku-reth:8008"
+					}
+				],
+				"client_name": "teku",
+				"enr": "enr:-LK4QJP2RC8_VtokxhcJhaSkCRZsPf5a52T2NosjmDQN39EYER9k-a-FF-wexwSkvICIYCdnMYZaHNKIRQr_IPCPQfoEh2F0dG5ldHOIAAAAAAAYAACEZXRoMpDMBtFnYAAAOP__________gmlkgnY0gmlwhKwQACeJc2VjcDI1NmsxoQPbK4hCqp3z8yOu3ydCqycQ1OwF-sIk07DR1tJhMpsk_YN0Y3CCIyiDdWRwgiMo",
+				"http_port": 4000,
+				"ip_addr": "cl-2-teku-reth",
+				"ip_address": "",
+				"multiaddr": "/ip4/172.16.0.39/tcp/9000/p2p/16Uiu2HAmTQY8sm6eWPeBY7k5Z7xPSnTKNeHoi1ycbXvu3pKMRHtp",
+				"peer_id": "16Uiu2HAmTQY8sm6eWPeBY7k5Z7xPSnTKNeHoi1ycbXvu3pKMRHtp",
+				"snooper_el_engine_context": null,
+				"snooper_enabled": false,
+				"supernode": false,
+				"validator_keystore_files_artifact_uuid": "2-teku-reth-128-255"
+			},
+			"cl_type": "teku",
+			"el_context": {
+				"client_name": "reth",
+				"dns_name": "el-2-reth-teku",
+				"el_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "el-2-reth-teku",
+						"path": "/metrics",
+						"url": "el-2-reth-teku:9001"
+					}
+				],
+				"engine_rpc_port_num": 8551,
+				"enode": "enode://a75caaa46e5cd0ac64dba4ac8d4bd00d66e2e100eed5cd3d31b6d89cbfe2c8b0ae25bb5335bd028bbc89fd38edc51290cf1119762df886c43a021ebbe3cfa3a9@172.16.0.25:30303",
+				"enr": "",
+				"ip_addr": "172.16.0.25",
+				"rpc_http_url": "http://el-2-reth-teku:8545",
+				"rpc_port_num": 8545,
+				"service_name": "el-2-reth-teku",
+				"ws_port_num": 8546,
+				"ws_url": "ws://el-2-reth-teku:8546"
+			},
+			"el_type": "reth",
+			"ethereum_metrics_exporter_context": null,
+			"remote_signer_context": null,
+			"remote_signer_type": "web3signer",
+			"snooper_beacon_context": null,
+			"snooper_el_engine_context": null,
+			"snooper_el_rpc_context": null,
+			"vc_context": null,
+			"vc_type": "teku",
+			"xatu_sentry_context": null
+		},
+		{
+			"cl_context": {
+				"beacon_grpc_url": "",
+				"beacon_http_url": "http://cl-3-nimbus-nethermind:4000",
+				"beacon_service_name": "cl-3-nimbus-nethermind",
+				"cl_nodes_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "cl-3-nimbus-nethermind",
+						"path": "/metrics",
+						"url": "cl-3-nimbus-nethermind:8008"
+					}
+				],
+				"client_name": "nimbus",
+				"enr": "enr:-MK4QP0v8qZxI4Uc5NfSx_jAF1dBfWRgUGuHR60Ce2ZH3fKaJ53Px90IF7TDRkXKCEbmueu6KflnScCTm4zww2tCm68Gh2F0dG5ldHOIAAAAAAAAAMCDY2djgYCEZXRoMpDMBtFnYAAAOP__________gmlkgnY0gmlwhKwQACCJc2VjcDI1NmsxoQMaeFqw9LNyVlguskJ2tl57TZEIL0k8oPOtxxDIDHf_rohzeW5jbmV0cwqDdGNwgiMog3VkcIIjKA",
+				"http_port": 4000,
+				"ip_addr": "cl-3-nimbus-nethermind",
+				"ip_address": "",
+				"multiaddr": "/ip4/172.16.0.32/tcp/9000/p2p/16Uiu2HAmESKPjGA35ymdetdZzhWrut4Ncwqi1vK1uM1KR5Ypn9Am",
+				"peer_id": "16Uiu2HAmESKPjGA35ymdetdZzhWrut4Ncwqi1vK1uM1KR5Ypn9Am",
+				"snooper_el_engine_context": null,
+				"snooper_enabled": false,
+				"supernode": false,
+				"validator_keystore_files_artifact_uuid": "3-nimbus-nethermind-256-383"
+			},
+			"cl_type": "nimbus",
+			"el_context": {
+				"client_name": "nethermind",
+				"dns_name": "el-3-nethermind-nimbus",
+				"el_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "el-3-nethermind-nimbus",
+						"path": "/metrics",
+						"url": "el-3-nethermind-nimbus:9001"
+					}
+				],
+				"engine_rpc_port_num": 8551,
+				"enode": "enode://213ff00bbba851c3ad3483b9aa296f44bbcde07c3f4cc84031c7891a1868a7ebc75c91b524e154da2696dfefe4d08559018fb0d51d2d7107352d56ad3e56ed1a@172.16.0.26:30303",
+				"enr": "",
+				"ip_addr": "172.16.0.26",
+				"rpc_http_url": "http://el-3-nethermind-nimbus:8545",
+				"rpc_port_num": 8545,
+				"service_name": "el-3-nethermind-nimbus",
+				"ws_port_num": 8546,
+				"ws_url": "ws://el-3-nethermind-nimbus:8546"
+			},
+			"el_type": "nethermind",
+			"ethereum_metrics_exporter_context": null,
+			"remote_signer_context": null,
+			"remote_signer_type": "web3signer",
+			"snooper_beacon_context": null,
+			"snooper_el_engine_context": null,
+			"snooper_el_rpc_context": null,
+			"vc_context": null,
+			"vc_type": "nimbus",
+			"xatu_sentry_context": null
+		},
+		{
+			"cl_context": {
+				"beacon_grpc_url": "",
+				"beacon_http_url": "http://cl-4-teku-geth:4000",
+				"beacon_service_name": "cl-4-teku-geth",
+				"cl_nodes_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "cl-4-teku-geth",
+						"path": "/metrics",
+						"url": "cl-4-teku-geth:8008"
+					}
+				],
+				"client_name": "teku",
+				"enr": "enr:-LK4QAa6lVcc92e6UiAb6dMOlqkRpfif_E8W8YLims-Dw-kGdbD5geTpkiHLLsQ8z7k5Ef3kAoKFiDsTaz3f3jUgdhkEh2F0dG5ldHOIAAAAAAAAgAGEZXRoMpDMBtFnYAAAOP__________gmlkgnY0gmlwhKwQACGJc2VjcDI1NmsxoQLWvomfihR1Z40-Ib1cBBGCUNlgetg1TCZm5Qe27BXRnoN0Y3CCIyiDdWRwgiMo",
+				"http_port": 4000,
+				"ip_addr": "cl-4-teku-geth",
+				"ip_address": "",
+				"multiaddr": "/ip4/172.16.0.33/tcp/9000/p2p/16Uiu2HAm9swjriUA1QmU2heyyJegs8nsCmiE4W8Yy7pHVH8Kw65K",
+				"peer_id": "16Uiu2HAm9swjriUA1QmU2heyyJegs8nsCmiE4W8Yy7pHVH8Kw65K",
+				"snooper_el_engine_context": null,
+				"snooper_enabled": false,
+				"supernode": false,
+				"validator_keystore_files_artifact_uuid": "4-teku-geth-384-511"
+			},
+			"cl_type": "teku",
+			"el_context": {
+				"client_name": "geth",
+				"dns_name": "el-4-geth-teku",
+				"el_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "el-4-geth-teku",
+						"path": "/debug/metrics/prometheus",
+						"url": "el-4-geth-teku:9001"
+					}
+				],
+				"engine_rpc_port_num": 8551,
+				"enode": "enode://5156055e758f4d486ec498c77edb301fa98d5594c60054188b0dce59418f4ca611bcffb8b85e39681e0e37e2360cad7bac2c3124467bfe9176aeab86b7228d70@172.16.0.19:30303",
+				"enr": "enr:-KO4QDyux6YcC9GqT1EkmPVSvSrC7jnU-ESQS_tdXOdYz-ySCkBCU8UQzq0KFAUrZS_--lwHGGPOKkdPl-Lc0F6XVC-GAZy3ObL8g2V0aMfGhN8uCNuAgmlkgnY0gmlwhKwQABOJc2VjcDI1NmsxoQJRVgVedY9NSG7EmMd-2zAfqY1VlMYAVBiLDc5ZQY9MpoRzbmFwwIN0Y3CCdl-DdWRwgnZf",
+				"ip_addr": "172.16.0.19",
+				"rpc_http_url": "http://el-4-geth-teku:8545",
+				"rpc_port_num": 8545,
+				"service_name": "el-4-geth-teku",
+				"ws_port_num": 8546,
+				"ws_url": "ws://el-4-geth-teku:8546"
+			},
+			"el_type": "geth",
+			"ethereum_metrics_exporter_context": null,
+			"remote_signer_context": null,
+			"remote_signer_type": "web3signer",
+			"snooper_beacon_context": null,
+			"snooper_el_engine_context": null,
+			"snooper_el_rpc_context": null,
+			"vc_context": null,
+			"vc_type": "teku",
+			"xatu_sentry_context": null
+		},
+		{
+			"cl_context": {
+				"beacon_grpc_url": "",
+				"beacon_http_url": "http://cl-5-grandine-reth:4000",
+				"beacon_service_name": "cl-5-grandine-reth",
+				"cl_nodes_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "cl-5-grandine-reth",
+						"path": "/metrics",
+						"url": "cl-5-grandine-reth:8008"
+					}
+				],
+				"client_name": "grandine",
+				"enr": "enr:-Nu4QImmvdlLTJFoVxL_WJEoxP17YUWgPDMEha9JepRr50W9YtqlePiNkRTyJFdwJ7ZwUbeJy96ViAhqXUt4_9PSFlkHh2F0dG5ldHOIAAAAAAAGAACGY2xpZW50z4hHcmFuZGluZYUyLjAuMoRldGgykMwG0WdgAAA4__________-CaWSCdjSCaXCErBAAIoRxdWljgiMpiXNlY3AyNTZrMaEDJ6butgbK4_6z9714ejF2pUrEvcXAt72u804Cx6UP1x2Ic3luY25ldHMPg3RjcIIjKIN1ZHCCIyg",
+				"http_port": 4000,
+				"ip_addr": "cl-5-grandine-reth",
+				"ip_address": "",
+				"multiaddr": "/ip4/172.16.0.34/tcp/9000/p2p/16Uiu2HAmFKmtPJz8KTSCER21Xo2SemzMAXDdFjGzRVAP71JYKqTS",
+				"peer_id": "16Uiu2HAmFKmtPJz8KTSCER21Xo2SemzMAXDdFjGzRVAP71JYKqTS",
+				"snooper_el_engine_context": null,
+				"snooper_enabled": false,
+				"supernode": false,
+				"validator_keystore_files_artifact_uuid": "5-grandine-reth-512-639"
+			},
+			"cl_type": "grandine",
+			"el_context": {
+				"client_name": "reth",
+				"dns_name": "el-5-reth-grandine",
+				"el_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "el-5-reth-grandine",
+						"path": "/metrics",
+						"url": "el-5-reth-grandine:9001"
+					}
+				],
+				"engine_rpc_port_num": 8551,
+				"enode": "enode://27bb681ac33492a490cf9d9806150246a44e0338b3398071d2b36e3cac91bb917bba7e3307d2b388766b6c5b6f874a821ea31bd070af7a4f1c640d62073f9195@172.16.0.20:30303",
+				"enr": "",
+				"ip_addr": "172.16.0.20",
+				"rpc_http_url": "http://el-5-reth-grandine:8545",
+				"rpc_port_num": 8545,
+				"service_name": "el-5-reth-grandine",
+				"ws_port_num": 8546,
+				"ws_url": "ws://el-5-reth-grandine:8546"
+			},
+			"el_type": "reth",
+			"ethereum_metrics_exporter_context": null,
+			"remote_signer_context": null,
+			"remote_signer_type": "web3signer",
+			"snooper_beacon_context": null,
+			"snooper_el_engine_context": null,
+			"snooper_el_rpc_context": null,
+			"vc_context": null,
+			"vc_type": "grandine",
+			"xatu_sentry_context": null
+		},
+		{
+			"cl_context": {
+				"beacon_grpc_url": "",
+				"beacon_http_url": "http://cl-6-nimbus-nethermind:4000",
+				"beacon_service_name": "cl-6-nimbus-nethermind",
+				"cl_nodes_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "cl-6-nimbus-nethermind",
+						"path": "/metrics",
+						"url": "cl-6-nimbus-nethermind:8008"
+					}
+				],
+				"client_name": "nimbus",
+				"enr": "enr:-Li4QB1T6wviJGAZqkSnPZiuyzF_43zZBoC1KjlFlpK1tiuMXF4l6gBaOy74_84dUMvU6YEE_AeU1ulm1m84lkKEZg8Fh2F0dG5ldHOIAAAAAAAAGACDY2djgYCEZXRoMpDMBtFnYAAAOP__________gmlkgnY0gmlwhKwQACOJc2VjcDI1NmsxoQNb0480dSH2WvJ-5N2bTapyK87EuEkLh9EgyDUX0CLaZoN0Y3CCIyiDdWRwgiMo",
+				"http_port": 4000,
+				"ip_addr": "cl-6-nimbus-nethermind",
+				"ip_address": "",
+				"multiaddr": "/ip4/172.16.0.35/tcp/9000/p2p/16Uiu2HAmJqSZANESGPdoMrekMvPZen2VyTgEKS9aPs36fc3AMoYy",
+				"peer_id": "16Uiu2HAmJqSZANESGPdoMrekMvPZen2VyTgEKS9aPs36fc3AMoYy",
+				"snooper_el_engine_context": null,
+				"snooper_enabled": false,
+				"supernode": false,
+				"validator_keystore_files_artifact_uuid": "6-nimbus-nethermind-640-767"
+			},
+			"cl_type": "nimbus",
+			"el_context": {
+				"client_name": "nethermind",
+				"dns_name": "el-6-nethermind-nimbus",
+				"el_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "el-6-nethermind-nimbus",
+						"path": "/metrics",
+						"url": "el-6-nethermind-nimbus:9001"
+					}
+				],
+				"engine_rpc_port_num": 8551,
+				"enode": "enode://6baa6d8d84a0a72f50a422e8cdebfa93b0d0c2e2b5f17f7ee85ec2b12dcac09420a8bca327867369bef5856e254b5249a6ea3ec43c7318a74b21efe408eee2ba@172.16.0.21:30303",
+				"enr": "",
+				"ip_addr": "172.16.0.21",
+				"rpc_http_url": "http://el-6-nethermind-nimbus:8545",
+				"rpc_port_num": 8545,
+				"service_name": "el-6-nethermind-nimbus",
+				"ws_port_num": 8546,
+				"ws_url": "ws://el-6-nethermind-nimbus:8546"
+			},
+			"el_type": "nethermind",
+			"ethereum_metrics_exporter_context": null,
+			"remote_signer_context": null,
+			"remote_signer_type": "web3signer",
+			"snooper_beacon_context": null,
+			"snooper_el_engine_context": null,
+			"snooper_el_rpc_context": null,
+			"vc_context": null,
+			"vc_type": "nimbus",
+			"xatu_sentry_context": null
+		},
+		{
+			"cl_context": {
+				"beacon_grpc_url": "",
+				"beacon_http_url": "http://cl-7-nimbus-geth:4000",
+				"beacon_service_name": "cl-7-nimbus-geth",
+				"cl_nodes_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "cl-7-nimbus-geth",
+						"path": "/metrics",
+						"url": "cl-7-nimbus-geth:8008"
+					}
+				],
+				"client_name": "nimbus",
+				"enr": "enr:-MK4QAfKKfhNhamNpjWo0LUXWYbpXxs70LSa6HJLd5U10GkIGkI5ou0kub76wKMiPbLjtnI-p7G6qbo3uFgGs0Oy25gGh2F0dG5ldHOIAAAAAAAAAMCDY2djgYCEZXRoMpDMBtFnYAAAOP__________gmlkgnY0gmlwhKwQACSJc2VjcDI1NmsxoQLGL9TG7mrfYw60v4OkWWnIMNjgTUJ4FlYhMCGVewXmp4hzeW5jbmV0cwaDdGNwgiMog3VkcIIjKA",
+				"http_port": 4000,
+				"ip_addr": "cl-7-nimbus-geth",
+				"ip_address": "",
+				"multiaddr": "/ip4/172.16.0.36/tcp/9000/p2p/16Uiu2HAm8mK1KNhgKBCLQgjHFeqfFyoWQnJUcgyK9xm38j9V7oxA",
+				"peer_id": "16Uiu2HAm8mK1KNhgKBCLQgjHFeqfFyoWQnJUcgyK9xm38j9V7oxA",
+				"snooper_el_engine_context": null,
+				"snooper_enabled": false,
+				"supernode": false,
+				"validator_keystore_files_artifact_uuid": "7-nimbus-geth-768-895"
+			},
+			"cl_type": "nimbus",
+			"el_context": {
+				"client_name": "geth",
+				"dns_name": "el-7-geth-nimbus",
+				"el_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "el-7-geth-nimbus",
+						"path": "/debug/metrics/prometheus",
+						"url": "el-7-geth-nimbus:9001"
+					}
+				],
+				"engine_rpc_port_num": 8551,
+				"enode": "enode://0dfc6863e2b35079e28a2a9a80643846b6f29e56550c0782128efdca347c26627b886ed6ff6dd1578457abd6434894fb1841c85b605811433bdb12971b0dc0ca@172.16.0.22:30303",
+				"enr": "enr:-KO4QM23sv-a-e98A0LLL1RF4qL8is3PqPs5xZKLMs4ioH1uP5anVaaSHBE8jj_WaH8cVdAuFh751xyQUX3govLbao2GAZy3ObJfg2V0aMfGhN8uCNuAgmlkgnY0gmlwhKwQABaJc2VjcDI1NmsxoQIN_Ghj4rNQeeKKKpqAZDhGtvKeVlUMB4ISjv3KNHwmYoRzbmFwwIN0Y3CCdl-DdWRwgnZf",
+				"ip_addr": "172.16.0.22",
+				"rpc_http_url": "http://el-7-geth-nimbus:8545",
+				"rpc_port_num": 8545,
+				"service_name": "el-7-geth-nimbus",
+				"ws_port_num": 8546,
+				"ws_url": "ws://el-7-geth-nimbus:8546"
+			},
+			"el_type": "geth",
+			"ethereum_metrics_exporter_context": null,
+			"remote_signer_context": null,
+			"remote_signer_type": "web3signer",
+			"snooper_beacon_context": null,
+			"snooper_el_engine_context": null,
+			"snooper_el_rpc_context": null,
+			"vc_context": null,
+			"vc_type": "nimbus",
+			"xatu_sentry_context": null
+		},
+		{
+			"cl_context": {
+				"beacon_grpc_url": "",
+				"beacon_http_url": "http://cl-8-teku-reth:4000",
+				"beacon_service_name": "cl-8-teku-reth",
+				"cl_nodes_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "cl-8-teku-reth",
+						"path": "/metrics",
+						"url": "cl-8-teku-reth:8008"
+					}
+				],
+				"client_name": "teku",
+				"enr": "enr:-LK4QJzuG7Cm0c4N9RRPuT4DneB1d3aod2jE1SYOB-leceGyMfQoeMz4XXQk7ROGQRS-BnyDC9eCSiJrY-3LRUZA084Eh2F0dG5ldHOIAAAAAAAAgAGEZXRoMpDMBtFnYAAAOP__________gmlkgnY0gmlwhKwQACWJc2VjcDI1NmsxoQLCWSqtB4C-aAoHuEGsAB-w3cVmEBqz-SgXjCB-_bqLooN0Y3CCIyiDdWRwgiMo",
+				"http_port": 4000,
+				"ip_addr": "cl-8-teku-reth",
+				"ip_address": "",
+				"multiaddr": "/ip4/172.16.0.37/tcp/9000/p2p/16Uiu2HAm8WKw4N2vsccKHb6hERoZoPuii8mVkX5vU4FJCRW6KmHK",
+				"peer_id": "16Uiu2HAm8WKw4N2vsccKHb6hERoZoPuii8mVkX5vU4FJCRW6KmHK",
+				"snooper_el_engine_context": null,
+				"snooper_enabled": false,
+				"supernode": false,
+				"validator_keystore_files_artifact_uuid": "8-teku-reth-896-1023"
+			},
+			"cl_type": "teku",
+			"el_context": {
+				"client_name": "reth",
+				"dns_name": "el-8-reth-teku",
+				"el_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "el-8-reth-teku",
+						"path": "/metrics",
+						"url": "el-8-reth-teku:9001"
+					}
+				],
+				"engine_rpc_port_num": 8551,
+				"enode": "enode://5f8f1b55edd3abf9bf2e4f9e3df15baa93afaddcce28431d1d82490137c562a35cfecbba5d71c88448dd663a86b4d52b5ae98378046bdb99f5dd8012f0214f1b@172.16.0.23:30303",
+				"enr": "",
+				"ip_addr": "172.16.0.23",
+				"rpc_http_url": "http://el-8-reth-teku:8545",
+				"rpc_port_num": 8545,
+				"service_name": "el-8-reth-teku",
+				"ws_port_num": 8546,
+				"ws_url": "ws://el-8-reth-teku:8546"
+			},
+			"el_type": "reth",
+			"ethereum_metrics_exporter_context": null,
+			"remote_signer_context": null,
+			"remote_signer_type": "web3signer",
+			"snooper_beacon_context": null,
+			"snooper_el_engine_context": null,
+			"snooper_el_rpc_context": null,
+			"vc_context": null,
+			"vc_type": "teku",
+			"xatu_sentry_context": null
+		},
+		{
+			"cl_context": {
+				"beacon_grpc_url": "cl-9-prysm-nethermind:4000",
+				"beacon_http_url": "http://cl-9-prysm-nethermind:3500",
+				"beacon_service_name": "cl-9-prysm-nethermind",
+				"cl_nodes_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "cl-9-prysm-nethermind",
+						"path": "/metrics",
+						"url": "cl-9-prysm-nethermind:8080"
+					}
+				],
+				"client_name": "prysm",
+				"enr": "enr:-Mq4QN_yzQ7y3Y0ne-HME6-T8l47qBNRKA6ZUkDU7eTxmuDxAEO1RkThWGGinFG80pRcBwtGxlj-q8vnguTU5NpQ2eSGAZy3OkDRh2F0dG5ldHOIAAAAMAAAAACEZXRoMpDMBtFnYAAAOP__________gmlkgnY0gmlwhKwQACaEcXVpY4IyyIlzZWNwMjU2azGhA2kYffHkUqgwTunSMU3GQXz35uJST8PnRGC60aqM3W91iHN5bmNuZXRzAIN0Y3CCMsiDdWRwgi7g",
+				"http_port": 3500,
+				"ip_addr": "cl-9-prysm-nethermind",
+				"ip_address": "",
+				"multiaddr": "/ip4/172.16.0.38/tcp/13000/p2p/16Uiu2HAmKjEpVnMWVFESgL7M13WX59GqLgRGmvPdga1SzJCpFzpC",
+				"peer_id": "16Uiu2HAmKjEpVnMWVFESgL7M13WX59GqLgRGmvPdga1SzJCpFzpC",
+				"snooper_el_engine_context": null,
+				"snooper_enabled": false,
+				"supernode": false,
+				"validator_keystore_files_artifact_uuid": "9-prysm-nethermind-1024-1151"
+			},
+			"cl_type": "prysm",
+			"el_context": {
+				"client_name": "nethermind",
+				"dns_name": "el-9-nethermind-prysm",
+				"el_metrics_info": [
+					{
+						"config": {
+							"labels": null,
+							"scrape_interval": "15s"
+						},
+						"name": "el-9-nethermind-prysm",
+						"path": "/metrics",
+						"url": "el-9-nethermind-prysm:9001"
+					}
+				],
+				"engine_rpc_port_num": 8551,
+				"enode": "enode://12721378cdb2cf4c722ffa0b3fd85fd97fb588886512eebc4ecb760198561a8ceb6c0f5c737e6ee1c604610f5f21e93fccdd59b2b60472e7f602b72c94e9196f@172.16.0.24:30303",
+				"enr": "",
+				"ip_addr": "172.16.0.24",
+				"rpc_http_url": "http://el-9-nethermind-prysm:8545",
+				"rpc_port_num": 8545,
+				"service_name": "el-9-nethermind-prysm",
+				"ws_port_num": 8546,
+				"ws_url": "ws://el-9-nethermind-prysm:8546"
+			},
+			"el_type": "nethermind",
+			"ethereum_metrics_exporter_context": null,
+			"remote_signer_context": null,
+			"remote_signer_type": "web3signer",
+			"snooper_beacon_context": null,
+			"snooper_el_engine_context": null,
+			"snooper_el_rpc_context": null,
+			"vc_context": {
+				"client_name": "prysm",
+				"metrics_info": {
+					"config": {
+						"labels": null,
+						"scrape_interval": "15s"
+					},
+					"name": "vc-9-nethermind-prysm",
+					"path": "/metrics",
+					"url": "vc-9-nethermind-prysm:8080"
+				},
+				"service_name": "vc-9-nethermind-prysm"
+			},
+			"vc_type": "prysm",
+			"xatu_sentry_context": null
+		}
+	],
+	"blockscout_sc_verif_url": null,
+	"final_genesis_timestamp": "1772600579",
+	"genesis_validators_root": "0x773692c31450258e4b07893d2c9b897aef0ae69de000790866854cd86b0c1091",
+	"grafana_info": {
+		"dashboard_path": "/d/QdTOwy-nz/eth2-merge-kurtosis-module-dashboard?orgId=1",
+		"password": "admin",
+		"user": "admin"
+	},
+	"network_id": "3151908",
+	"network_params": {
+		"additional_mnemonics": [],
+		"additional_preloaded_contracts": {},
+		"aggregate_due_bps_gloas": 5000,
+		"altair_fork_epoch": 0,
+		"attestation_due_bps_gloas": 2500,
+		"base_fee_update_fraction_electra": 5007716,
+		"bellatrix_fork_epoch": 0,
+		"bpo_1_base_fee_update_fraction": 8346193,
+		"bpo_1_epoch": 18446744073709551615,
+		"bpo_1_max_blobs": 15,
+		"bpo_1_target_blobs": 10,
+		"bpo_2_base_fee_update_fraction": 11684671,
+		"bpo_2_epoch": 18446744073709551615,
+		"bpo_2_max_blobs": 21,
+		"bpo_2_target_blobs": 14,
+		"bpo_3_base_fee_update_fraction": 0,
+		"bpo_3_epoch": 18446744073709551615,
+		"bpo_3_max_blobs": 0,
+		"bpo_3_target_blobs": 0,
+		"bpo_4_base_fee_update_fraction": 0,
+		"bpo_4_epoch": 18446744073709551615,
+		"bpo_4_max_blobs": 0,
+		"bpo_4_target_blobs": 0,
+		"bpo_5_base_fee_update_fraction": 0,
+		"bpo_5_epoch": 18446744073709551615,
+		"bpo_5_max_blobs": 0,
+		"bpo_5_target_blobs": 0,
+		"capella_fork_epoch": 0,
+		"churn_limit_quotient": 32,
+		"contribution_due_bps_gloas": 5000,
+		"custody_requirement": 4,
+		"data_column_sidecar_subnet_count": 128,
+		"deneb_fork_epoch": 0,
+		"deposit_contract_address": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
+		"devnet_repo": "ethpandaops",
+		"eip7441_fork_epoch": 18446744073709551615,
+		"ejection_balance": 16000000000,
+		"electra_fork_epoch": 0,
+		"eth1_follow_distance": 16,
+		"force_snapshot_sync": false,
+		"fulu_fork_epoch": 18446744073709551615,
+		"gas_limit": 0,
+		"genesis_delay": 5,
+		"genesis_gaslimit": 60000000,
+		"genesis_time": 0,
+		"gloas_fork_epoch": 18446744073709551615,
+		"heze_fork_epoch": 18446744073709551615,
+		"inclusion_list_submission_due_bps": 6667,
+		"max_blobs_per_block_electra": 9,
+		"max_payload_size": 10485760,
+		"max_per_epoch_activation_churn_limit": 4,
+		"max_request_blob_sidecars_electra": 1152,
+		"max_request_blocks_deneb": 128,
+		"min_builder_withdrawability_delay": 8,
+		"min_epochs_for_block_requests": 272,
+		"min_epochs_for_data_column_sidecars_requests": 4096,
+		"min_validator_withdrawability_delay": 256,
+		"network": "kurtosis",
+		"network_id": "3151908",
+		"network_sync_base_url": "https://snapshots.ethpandaops.io/",
+		"num_validator_keys_per_node": 128,
+		"payload_attestation_due_bps": 7500,
+		"perfect_peerdas_enabled": false,
+		"prefunded_accounts": {},
+		"preregistered_validator_count": 0,
+		"preregistered_validator_keys_mnemonic": "giant issue aisle success illegal bike spike question tent bar rely arctic volcano long crawl hungry vocal artwork sniff fantasy very lucky have athlete",
+		"preset": "minimal",
+		"proposer_inclusion_list_cutoff_bps": 9167,
+		"samples_per_slot": 8,
+		"seconds_per_slot": 6,
+		"shadowfork_block_height": "latest",
+		"shard_committee_period": 64,
+		"slot_duration_ms": 6000,
+		"sync_message_due_bps_gloas": 2500,
+		"target_blobs_per_block_electra": 6,
+		"validator_balance": 32,
+		"view_freeze_cutoff_bps": 7500,
+		"withdrawal_address": "0x8943545177806ED17B9F23F0a21ee5948eCaa776",
+		"withdrawal_type": "0x00"
+	},
+	"pre_funded_accounts": [
+		{
+			"address": "0x8943545177806ED17B9F23F0a21ee5948eCaa776",
+			"private_key": "bcdf20249abf0ed6d944c0288fad489e33f66b3960d9e6229c1cd214ed3bbe31"
+		},
+		{
+			"address": "0xE25583099BA105D9ec0A67f5Ae86D90e50036425",
+			"private_key": "39725efee3fb28614de3bacaffe4cc4bd8c436257e2c8bb887c4b5c4be45e76d"
+		},
+		{
+			"address": "0x614561D2d143621E126e87831AEF287678B442b8",
+			"private_key": "53321db7c1e331d93a11a41d16f004d7ff63972ec8ec7c25db329728ceeb1710"
+		},
+		{
+			"address": "0xf93Ee4Cf8c6c40b329b0c0626F28333c132CF241",
+			"private_key": "ab63b23eb7941c1251757e24b3d2350d2bc05c3c388d06f8fe6feafefb1e8c70"
+		},
+		{
+			"address": "0x802dCbE1B1A97554B4F50DB5119E37E8e7336417",
+			"private_key": "5d2344259f42259f82d2c140aa66102ba89b57b4883ee441a8b312622bd42491"
+		},
+		{
+			"address": "0xAe95d8DA9244C37CaC0a3e16BA966a8e852Bb6D6",
+			"private_key": "27515f805127bebad2fb9b183508bdacb8c763da16f54e0678b16e8f28ef3fff"
+		},
+		{
+			"address": "0x2c57d1CFC6d5f8E4182a56b4cf75421472eBAEa4",
+			"private_key": "7ff1a4c1d57e5e784d327c4c7651e952350bc271f156afb3d00d20f5ef924856"
+		},
+		{
+			"address": "0x741bFE4802cE1C4b5b00F9Df2F5f179A1C89171A",
+			"private_key": "3a91003acaf4c21b3953d94fa4a6db694fa69e5242b2e37be05dd82761058899"
+		},
+		{
+			"address": "0xc3913d4D8bAb4914328651C2EAE817C8b78E1f4c",
+			"private_key": "bb1d0f125b4fb2bb173c318cdead45468474ca71474e2247776b2b4c0fa2d3f5"
+		},
+		{
+			"address": "0x65D08a056c17Ae13370565B04cF77D2AfA1cB9FA",
+			"private_key": "850643a0224065ecce3882673c21f56bcf6eef86274cc21cadff15930b59fc8c"
+		},
+		{
+			"address": "0x3e95dFbBaF6B348396E6674C7871546dCC568e56",
+			"private_key": "94eb3102993b41ec55c241060f47daa0f6372e2e3ad7e91612ae36c364042e44"
+		},
+		{
+			"address": "0x5918b2e647464d4743601a865753e64C8059Dc4F",
+			"private_key": "daf15504c22a352648a71ef2926334fe040ac1d5005019e09f6c979808024dc7"
+		},
+		{
+			"address": "0x589A698b7b7dA0Bec545177D3963A2741105C7C9",
+			"private_key": "eaba42282ad33c8ef2524f07277c03a776d98ae19f581990ce75becb7cfa1c23"
+		},
+		{
+			"address": "0x4d1CB4eB7969f8806E2CaAc0cbbB71f88C8ec413",
+			"private_key": "3fd98b5187bf6526734efaa644ffbb4e3670d66f5d0268ce0323ec09124bff61"
+		},
+		{
+			"address": "0xF5504cE2BcC52614F121aff9b93b2001d92715CA",
+			"private_key": "5288e2f440c7f0cb61a9be8afdeb4295f786383f96f5e35eb0c94ef103996b64"
+		},
+		{
+			"address": "0xF61E98E7D47aB884C244E39E031978E33162ff4b",
+			"private_key": "f296c7802555da2a5a662be70e078cbd38b44f96f8615ae529da41122ce8db05"
+		},
+		{
+			"address": "0xf1424826861ffbbD25405F5145B5E50d0F1bFc90",
+			"private_key": "bf3beef3bd999ba9f2451e06936f0423cd62b815c9233dd3bc90f7e02a1e8673"
+		},
+		{
+			"address": "0xfDCe42116f541fc8f7b0776e2B30832bD5621C85",
+			"private_key": "6ecadc396415970e91293726c3f5775225440ea0844ae5616135fd10d66b5954"
+		},
+		{
+			"address": "0xD9211042f35968820A3407ac3d80C725f8F75c14",
+			"private_key": "a492823c3e193d6c595f37a18e3c06650cf4c74558cc818b16130b293716106f"
+		},
+		{
+			"address": "0xD8F3183DEF51A987222D845be228e0Bbb932C222",
+			"private_key": "c5114526e042343c6d1899cad05e1c00ba588314de9b96929914ee0df18d46b2"
+		},
+		{
+			"address": "0xafF0CA253b97e54440965855cec0A8a2E2399896",
+			"private_key": "04b9f63ecf84210c5366c66d68fa1f5da1fa4f634fad6dfc86178e4d79ff9e59"
+		}
+	]
+}
+[36mINFO[0m[2026-03-04T05:03:39Z] [BENCH] starlark run stream completed in 1m36.218914184s (total wall clock: 1m37.042272577s) 
+[36mINFO[0m[2026-03-04T05:03:39Z] ================================================================== 
+[36mINFO[0m[2026-03-04T05:03:39Z] ||          Created enclave: bench-patched-multi-local          || 
+[36mINFO[0m[2026-03-04T05:03:39Z] ================================================================== 
+Name:            bench-patched-multi-local
+UUID:            a893aa2b7f81
+Status:          RUNNING
+Creation Time:   Wed, 04 Mar 2026 05:02:02 UTC
+Flags:           
+
+========================================= Files Artifacts =========================================
+UUID           Name
+8201a5d22409   1-prysm-geth-0-127
+ae02ac41a57a   2-teku-reth-128-255
+76845de2ce49   3-nimbus-nethermind-256-383
+fe52e557b55c   4-teku-geth-384-511
+45c19616a7d4   5-grandine-reth-512-639
+c1e76c915638   6-nimbus-nethermind-640-767
+6c4195e9f63a   7-nimbus-geth-768-895
+5b48ce9b6e89   8-teku-reth-896-1023
+ee88ffded196   9-prysm-nethermind-1024-1151
+dff22b3f6afe   dora-config
+96b2899934c2   el_cl_genesis_data
+fb64562d758e   final-genesis-timestamp
+8292ffae9dd4   genesis-el-cl-env-file
+0ea7b2ad4610   genesis_validators_root
+4f3022e8e01e   jwt_file
+d2674007a64f   keymanager_file
+07ff48e9d7ba   prysm-password
+9e8f8db2ae31   spamoor-config
+65404f17dfcf   validator-ranges
+
+========================================== User Services ==========================================
+UUID           Name                                               Ports                                         Status
+2c4608159a37   cl-1-prysm-geth                                    http: 3500/tcp -> http://127.0.0.1:33030      RUNNING
+                                                                  metrics: 8080/tcp -> http://127.0.0.1:33033   
+                                                                  profiling: 6060/tcp -> 127.0.0.1:33032        
+                                                                  quic-discovery: 13000/udp                     
+                                                                  rpc: 4000/tcp -> 127.0.0.1:33031              
+                                                                  tcp-discovery: 13000/tcp -> 127.0.0.1:33034   
+                                                                  udp-discovery: 12000/udp                      
+63f10e7d4d6f   cl-2-teku-reth                                     http: 4000/tcp -> http://127.0.0.1:33036      RUNNING
+                                                                  metrics: 8008/tcp -> http://127.0.0.1:33037   
+                                                                  tcp-discovery: 9000/tcp -> 127.0.0.1:33038    
+                                                                  udp-discovery: 9000/udp                       
+09fac0cd0b49   cl-3-nimbus-nethermind                             http: 4000/tcp -> http://127.0.0.1:33056      RUNNING
+                                                                  metrics: 8008/tcp -> http://127.0.0.1:33057   
+                                                                  tcp-discovery: 9000/tcp -> 127.0.0.1:33058    
+                                                                  udp-discovery: 9000/udp                       
+67291e2466c7   cl-4-teku-geth                                     http: 4000/tcp -> http://127.0.0.1:33047      RUNNING
+                                                                  metrics: 8008/tcp -> http://127.0.0.1:33048   
+                                                                  tcp-discovery: 9000/tcp -> 127.0.0.1:33049    
+                                                                  udp-discovery: 9000/udp                       
+45cefe35e774   cl-5-grandine-reth                                 http: 4000/tcp -> http://127.0.0.1:33039      RUNNING
+                                                                  metrics: 8008/tcp -> http://127.0.0.1:33040   
+                                                                  quic-discovery: 9001/udp                      
+                                                                  tcp-discovery: 9000/tcp -> 127.0.0.1:33041    
+                                                                  udp-discovery: 9000/udp                       
+d1ab720efdf0   cl-6-nimbus-nethermind                             http: 4000/tcp -> http://127.0.0.1:33053      RUNNING
+                                                                  metrics: 8008/tcp -> http://127.0.0.1:33054   
+                                                                  tcp-discovery: 9000/tcp -> 127.0.0.1:33055    
+                                                                  udp-discovery: 9000/udp                       
+fdc1f330caf7   cl-7-nimbus-geth                                   http: 4000/tcp -> http://127.0.0.1:33059      RUNNING
+                                                                  metrics: 8008/tcp -> http://127.0.0.1:33060   
+                                                                  tcp-discovery: 9000/tcp -> 127.0.0.1:33061    
+                                                                  udp-discovery: 9000/udp                       
+90ee0a138b23   cl-8-teku-reth                                     http: 4000/tcp -> http://127.0.0.1:33050      RUNNING
+                                                                  metrics: 8008/tcp -> http://127.0.0.1:33051   
+                                                                  tcp-discovery: 9000/tcp -> 127.0.0.1:33052    
+                                                                  udp-discovery: 9000/udp                       
+48bd23eaa089   cl-9-prysm-nethermind                              http: 3500/tcp -> http://127.0.0.1:33042      RUNNING
+                                                                  metrics: 8080/tcp -> http://127.0.0.1:33045   
+                                                                  profiling: 6060/tcp -> 127.0.0.1:33044        
+                                                                  quic-discovery: 13000/udp                     
+                                                                  rpc: 4000/tcp -> 127.0.0.1:33043              
+                                                                  tcp-discovery: 13000/tcp -> 127.0.0.1:33046   
+                                                                  udp-discovery: 12000/udp                      
+f2b1dccd44bf   dora                                               http: 8080/tcp -> http://127.0.0.1:33027      RUNNING
+e87d7823c1ba   el-1-geth-prysm                                    engine-rpc: 8551/tcp -> 127.0.0.1:32984       RUNNING
+                                                                  metrics: 9001/tcp -> http://127.0.0.1:32985   
+                                                                  rpc: 8545/tcp -> 127.0.0.1:32982              
+                                                                  tcp-discovery: 30303/tcp -> 127.0.0.1:32986   
+                                                                  udp-discovery: 30303/udp                      
+                                                                  ws: 8546/tcp -> 127.0.0.1:32983               
+911f40590235   el-2-reth-teku                                     engine-rpc: 8551/tcp -> 127.0.0.1:33014       RUNNING
+                                                                  metrics: 9001/tcp -> http://127.0.0.1:33015   
+                                                                  rpc: 8545/tcp -> 127.0.0.1:33012              
+                                                                  tcp-discovery: 30303/tcp -> 127.0.0.1:33016   
+                                                                  udp-discovery: 30303/udp                      
+                                                                  ws: 8546/tcp -> 127.0.0.1:33013               
+c5773f6d4213   el-3-nethermind-nimbus                             engine-rpc: 8551/tcp -> 127.0.0.1:32999       RUNNING
+                                                                  metrics: 9001/tcp -> http://127.0.0.1:33000   
+                                                                  rpc: 8545/tcp -> 127.0.0.1:32997              
+                                                                  tcp-discovery: 30303/tcp -> 127.0.0.1:33001   
+                                                                  udp-discovery: 30303/udp                      
+                                                                  ws: 8546/tcp -> 127.0.0.1:32998               
+6c7442fea82a   el-4-geth-teku                                     engine-rpc: 8551/tcp -> 127.0.0.1:33024       RUNNING
+                                                                  metrics: 9001/tcp -> http://127.0.0.1:33025   
+                                                                  rpc: 8545/tcp -> 127.0.0.1:33022              
+                                                                  tcp-discovery: 30303/tcp -> 127.0.0.1:33026   
+                                                                  udp-discovery: 30303/udp                      
+                                                                  ws: 8546/tcp -> 127.0.0.1:33023               
+b13ad9b6658a   el-5-reth-grandine                                 engine-rpc: 8551/tcp -> 127.0.0.1:33009       RUNNING
+                                                                  metrics: 9001/tcp -> http://127.0.0.1:33010   
+                                                                  rpc: 8545/tcp -> 127.0.0.1:33007              
+                                                                  tcp-discovery: 30303/tcp -> 127.0.0.1:33011   
+                                                                  udp-discovery: 30303/udp                      
+                                                                  ws: 8546/tcp -> 127.0.0.1:33008               
+2501ac0d0d2f   el-6-nethermind-nimbus                             engine-rpc: 8551/tcp -> 127.0.0.1:32989       RUNNING
+                                                                  metrics: 9001/tcp -> http://127.0.0.1:32990   
+                                                                  rpc: 8545/tcp -> 127.0.0.1:32987              
+                                                                  tcp-discovery: 30303/tcp -> 127.0.0.1:32991   
+                                                                  udp-discovery: 30303/udp                      
+                                                                  ws: 8546/tcp -> 127.0.0.1:32988               
+89c099aa2491   el-7-geth-nimbus                                   engine-rpc: 8551/tcp -> 127.0.0.1:33019       RUNNING
+                                                                  metrics: 9001/tcp -> http://127.0.0.1:33020   
+                                                                  rpc: 8545/tcp -> 127.0.0.1:33017              
+                                                                  tcp-discovery: 30303/tcp -> 127.0.0.1:33021   
+                                                                  udp-discovery: 30303/udp                      
+                                                                  ws: 8546/tcp -> 127.0.0.1:33018               
+a51c418260eb   el-8-reth-teku                                     engine-rpc: 8551/tcp -> 127.0.0.1:32994       RUNNING
+                                                                  metrics: 9001/tcp -> http://127.0.0.1:32995   
+                                                                  rpc: 8545/tcp -> 127.0.0.1:32992              
+                                                                  tcp-discovery: 30303/tcp -> 127.0.0.1:32996   
+                                                                  udp-discovery: 30303/udp                      
+                                                                  ws: 8546/tcp -> 127.0.0.1:32993               
+8cd6cda36146   el-9-nethermind-prysm                              engine-rpc: 8551/tcp -> 127.0.0.1:33004       RUNNING
+                                                                  metrics: 9001/tcp -> http://127.0.0.1:33005   
+                                                                  rpc: 8545/tcp -> 127.0.0.1:33002              
+                                                                  tcp-discovery: 30303/tcp -> 127.0.0.1:33006   
+                                                                  udp-discovery: 30303/udp                      
+                                                                  ws: 8546/tcp -> 127.0.0.1:33003               
+99605e4d84cf   spamoor                                            http: 8080/tcp -> http://127.0.0.1:33028      RUNNING
+f3cddee111b1   validator-key-generation-cl-validator-keystore-0   <none>                                        RUNNING
+e7dae38419ba   validator-key-generation-cl-validator-keystore-1   <none>                                        RUNNING
+3cb67831c4a9   validator-key-generation-cl-validator-keystore-2   <none>                                        RUNNING
+a020c80f99cf   validator-key-generation-cl-validator-keystore-3   <none>                                        RUNNING
+1364f72ba8ec   validator-key-generation-cl-validator-keystore-4   <none>                                        RUNNING
+9b4b0970085e   validator-key-generation-cl-validator-keystore-5   <none>                                        RUNNING
+fe4f495bac3f   validator-key-generation-cl-validator-keystore-6   <none>                                        RUNNING
+98dc00f966b7   validator-key-generation-cl-validator-keystore-7   <none>                                        RUNNING
+8a70310ebe53   validator-key-generation-cl-validator-keystore-8   <none>                                        RUNNING
+d667a99da1dc   vc-1-geth-prysm                                    metrics: 8080/tcp -> http://127.0.0.1:33035   RUNNING
+1d7976e9050b   vc-9-nethermind-prysm                              metrics: 8080/tcp -> http://127.0.0.1:33029   RUNNING
+

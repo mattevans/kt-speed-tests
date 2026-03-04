@@ -1,0 +1,28 @@
+{
+  "label": "patched-multi-remote",
+  "config": "configs/multi-client.yaml",
+  "image_download_mode": "missing",
+  "package_ref": "github.com/ethpandaops/ethereum-package",
+  "command": "./results/builds/patched/kurtosis run --enclave bench-patched-multi-remote --image-download missing --args-file configs/multi-client.yaml --parallel --parallelism 100 --resource-check=false github.com/ethpandaops/ethereum-package",
+  "duration_seconds": 104.78,
+  "new_images_pulled": 0,
+  "num_services": "32",
+  "exit_code": 0,
+  "apic_phases": {
+    "runStarlarkPackageSetup: package resolution": 1.2112,
+    "RunStarlarkPackage setup": 1.2117,
+    "interpretation": 0.7828,
+    "GetServiceNames": 0.0000,
+    "getServiceNameToPortIDsMap": 0.0000,
+    "GetAvailableCPUAndMemory": 0.0000,
+    "validator env setup total": 0.0002,
+    "validateAndUpdateEnvironment": 0.0002,
+    "ImagesValidator.Validate": 0.0302,
+    "validateImagesAccountingForProgress": 0.0305,
+    "StartosisValidator.Validate total": 0.0312,
+    "validation phase": 0.0313,
+    "execution phase": 101.6214,
+    "StartosisRunner.Run total": 102.4420,
+    "RunStarlarkPackage total": 103.6539
+  }
+}

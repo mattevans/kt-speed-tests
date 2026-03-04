@@ -1,0 +1,30 @@
+{
+  "label": "baseline-single-local",
+  "config": "configs/single-client.yaml",
+  "image_download_mode": "missing",
+  "package_ref": "./ethereum-package",
+  "command": "./results/builds/baseline/kurtosis run --enclave bench-baseline-single-local --image-download missing --args-file configs/single-client.yaml ./ethereum-package",
+  "duration_seconds": 35.64,
+  "new_images_pulled": 1,
+  "num_services": "6",
+  "exit_code": 0,
+  "apic_phases": {
+    "package store/decompress": 0.1041,
+    "UploadStarlarkPackage total": 0.1383,
+    "runStarlarkPackageSetup: package resolution": 0.0000,
+    "RunStarlarkPackage setup": 0.0005,
+    "interpretation": 0.8556,
+    "GetServiceNames": 0.0000,
+    "getServiceNameToPortIDsMap": 0.0000,
+    "GetAvailableCPUAndMemory": 2.0301,
+    "validator env setup total": 2.0303,
+    "validateAndUpdateEnvironment": 0.0001,
+    "ImagesValidator.Validate": 0.0165,
+    "validateImagesAccountingForProgress": 0.0167,
+    "StartosisValidator.Validate total": 2.0473,
+    "validation phase": 2.0475,
+    "execution phase": 29.4113,
+    "StartosisRunner.Run total": 32.3167,
+    "RunStarlarkPackage total": 32.3174
+  }
+}

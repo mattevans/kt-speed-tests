@@ -1,0 +1,6 @@
+{
+  "baseline_branch": "bench-baseline",
+  "baseline_sha": "cf51988",
+  "patched_branch": "refactor/boot-perf",
+  "patched_sha": "9b50ace"
+}

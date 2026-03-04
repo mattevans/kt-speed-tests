@@ -1,0 +1,28 @@
+{
+  "label": "baseline-multi-remote",
+  "config": "configs/multi-client.yaml",
+  "image_download_mode": "missing",
+  "package_ref": "github.com/ethpandaops/ethereum-package",
+  "command": "./results/builds/baseline/kurtosis run --enclave bench-baseline-multi-remote --image-download missing --args-file configs/multi-client.yaml github.com/ethpandaops/ethereum-package",
+  "duration_seconds": 102.52,
+  "new_images_pulled": 0,
+  "num_services": "32",
+  "exit_code": 0,
+  "apic_phases": {
+    "runStarlarkPackageSetup: package resolution": 1.1794,
+    "RunStarlarkPackage setup": 1.1799,
+    "interpretation": 0.7722,
+    "GetServiceNames": 0.0000,
+    "getServiceNameToPortIDsMap": 0.0000,
+    "GetAvailableCPUAndMemory": 2.0264,
+    "validator env setup total": 2.0266,
+    "validateAndUpdateEnvironment": 0.0002,
+    "ImagesValidator.Validate": 0.0263,
+    "validateImagesAccountingForProgress": 0.0265,
+    "StartosisValidator.Validate total": 2.0536,
+    "validation phase": 2.0537,
+    "execution phase": 97.2392,
+    "StartosisRunner.Run total": 100.0712,
+    "RunStarlarkPackage total": 101.2514
+  }
+}
