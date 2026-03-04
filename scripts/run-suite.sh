@@ -125,6 +125,14 @@ if echo "${PACKAGE_REFS}" | grep -qw "local"; then
   echo ""
 fi
 
+# ── Phase 1b: Pre-pull images ───────────────────────────────────────
+
+echo "=== Phase 1b: Pre-pulling Docker images ==="
+echo ""
+
+# shellcheck disable=SC2086
+EP_DIR="${EP_DIR}" "${SCRIPT_DIR}/pull-images.sh" ${CONFIGS}
+
 # ── Phase 2: Run baseline matrix ────────────────────────────────────
 
 echo "=== Phase 2: Running baseline benchmarks ==="
